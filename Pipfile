@@ -1,0 +1,12 @@
+[[source]]
+name = "pypi"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+moviepy = "^1.0.3"
+SpeechRecognition = "^3.8.1"
+
+[requires]
+python_version = "3.12"
