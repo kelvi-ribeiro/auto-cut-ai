@@ -7,6 +7,7 @@ verify_ssl = true
 [packages]
 moviepy = "^1.0.3"
 SpeechRecognition = "^3.8.1"
+whisper-timestamped = "*"
 
 [requires]
 python_version = "3.12"
