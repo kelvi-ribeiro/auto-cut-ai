@@ -1,0 +1,7 @@
+{
+    "video_path": "Video_Curto.mp4",
+    "keyword": "ola",
+    "seconds_to_cut": 10,
+    "useDebugFile": true,
+    "whisper_model":"openai/whisper-medium"
+  }

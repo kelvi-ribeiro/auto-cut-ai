@@ -152,9 +152,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Custom debug results
-debug_results/
-
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
@@ -196,3 +193,8 @@ debug_results/
 *.webm
 
 # End of https://www.toptal.com/developers/gitignore/api/video,audio
+
+
+# Custom files
+debug_results/
+export/
