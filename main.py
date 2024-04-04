@@ -35,11 +35,11 @@ def cut_video(video_path, cuts, seconds_to_cut):
     return cut_segments
 
 
-filePath = "Video_Falado.mp4"
-result = whis.get_json_timestamped_result("manga", filePath)
+filePath = "Video_Curto.mp4"
+result = whis.get_json_timestamped_result("ola", filePath)
 
 # Call the method to perform the cuts on the video
-cut_segments = cut_video(filePath, result, 3)
+cut_segments = cut_video(filePath, result, 10)
 
 # Combine the cut segments into a single video
 combined_video = concatenate_videoclips(cut_segments) # TRATAR VAZIO
