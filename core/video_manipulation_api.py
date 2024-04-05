@@ -21,7 +21,7 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
         print(f"Error loading video: {e}")
         return None  
     cut_segments = cut_video(video, times_of_each_keyword_spoken, seconds_to_cut)
-    combined_video = concatenate_videoclips(cut_segments) 
+    combined_video = concatenate_videoclips(cut_segments) # TODO TRATAR VAZIO
     output_path = "export/" +  video_path + '_exported.mp4'
     combined_video.write_videofile(output_path)
     video.close()

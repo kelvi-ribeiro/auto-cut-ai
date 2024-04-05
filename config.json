@@ -1,7 +1,8 @@
 {
-    "video_path": "Video_Curto.mp4",
-    "keyword": "ola",
-    "seconds_to_cut": 10,
-    "useDebugFile": true,
+    "video_path": "test_videos/Test_Completo_Cut_6.mp4",
+    "keyword": "cut",
+    "seconds_to_cut": 50,
+    "useDebugFile": false,
+    "language":"en",
     "whisper_model":"openai/whisper-medium"
   }
