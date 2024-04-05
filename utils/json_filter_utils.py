@@ -2,6 +2,7 @@
 import utils.string_utils as string_utils
 
 def filter_json_by_keyword(json_data, keyword):
+    print(f"About to map the '{keyword}' in result" )
     if not keyword:
         return map_json_data(json_data)
     
@@ -9,6 +10,7 @@ def filter_json_by_keyword(json_data, keyword):
     filtered_results = []
     for word in only_words_array:
         if string_utils.remove_special_chars_and_accents(keyword) in string_utils.remove_special_chars_and_accents(word["text"]):
+            print(f"{word}' found in array")
             filtered_results.append(word)
 
     return filtered_results

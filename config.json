@@ -1,8 +1,8 @@
 {
-    "video_path": "test_videos/Test_Completo_Cut_6.mp4",
-    "keyword": "cut",
+    "video_path": "test_videos/Test_Video_4_corta_pt.mp4",
+    "keyword": "corta",
     "seconds_to_cut": 50,
     "useDebugFile": false,
-    "language":"en",
-    "whisper_model":"openai/whisper-medium"
+    "language":"pt",
+    "whisper_model":"openai/whisper-large-v2"
   }
