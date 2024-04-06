@@ -3,12 +3,13 @@ from pedalboard.io import AudioFile
 from pedalboard import *
 import noisereduce as nr
 import moviepy.editor as mp
+from utils.constants import ENHENCED_AUTH_PATH, EXTRACTED_AUTH_PATH
 
 def generate_enhenced_audio(video_path):
     clip = mp.VideoFileClip(video_path)
-    clip.audio.write_audiofile("extracted_audio.wav")
+    clip.audio.write_audiofile(EXTRACTED_AUTH_PATH)
     sr=44100
-    with AudioFile('extracted_audio.wav').resampled_to(sr) as f:
+    with AudioFile(EXTRACTED_AUTH_PATH).resampled_to(sr) as f:
         audio = f.read(f.frames)
 
         reduced_noise = nr.reduce_noise(y=audio, sr=sr, stationary=True, prop_decrease=0.75)
@@ -21,7 +22,7 @@ def generate_enhenced_audio(video_path):
         ])
 
         effected = board(reduced_noise, sr)
-        audio_enhenced_auth_path = "audio_enhenced.wav"
+        audio_enhenced_auth_path = ENHENCED_AUTH_PATH
 
         with AudioFile(audio_enhenced_auth_path, 'w', sr, effected.shape[0]) as f:
             f.write(effected)

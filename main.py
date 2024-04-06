@@ -1,12 +1,15 @@
 
 import core.video_manipulation_api as video_manipulation
 import core.voice_recognition_api as voice_recognition
+import utils.generic_utils as generic_utils
 import json
 import datetime as dt
 
 def generate_cut_video(video_path, keyword, seconds_to_cut, useDebugFile):
+    generic_utils.create_temp_dir()
     times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile)
     video_manipulation.generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut)
+    generic_utils.remove_temp_dir()
 
 with open('config.json') as config_file:
     config = json.load(config_file)
