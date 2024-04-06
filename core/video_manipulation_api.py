@@ -28,6 +28,7 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
     if not cut_segments:
         print("No cuts found for the word passed")
     else:
+        print(f"'{len(cut_segments)}' cuts were found to create a video in '{video_path}'")
         combined_video = concatenate_videoclips(cut_segments) 
         output_path = "export/" + os.path.basename(video_path) 
         combined_video.write_videofile(output_path, threads=multiprocessing.cpu_count())
