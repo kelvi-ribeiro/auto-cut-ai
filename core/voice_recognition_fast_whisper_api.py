@@ -7,11 +7,11 @@ import datetime
 
 def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
     if useDebugFile is False:
-        print(f"Initiating whisper process in {datetime.datetime.now()}...")
+        print(f"Initiating whisper process in {datetime.datetime.now()} for the video {video_path}")
         with open('config.json') as config_file:
             config = json.load(config_file)
             audio_enhenced_auth_path = audio_mp.generate_enhenced_audio(video_path)
-            model =  WhisperModel(config["whisper_model"], device="cpu", compute_type="int8")
+            model = WhisperModel(config["whisper_model"], device="cpu", compute_type="int8")
             segments, _  = model.transcribe(audio_enhenced_auth_path, language=config["language"], beam_size=5, best_of=5, word_timestamps=True)
             times_of_each_keyword_spoken = []
 

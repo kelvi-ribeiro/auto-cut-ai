@@ -21,6 +21,7 @@ def cut_video(video, cuts, seconds_to_cut):
     return cut_segments
 
 def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
+    cut_segments = []
     try:
         video = VideoFileClip(video_path)
     except Exception as e:
@@ -35,8 +36,10 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
         output_path = VIDEO_GENERATION_PATH + "/" + os.path.basename(video_path) 
         combined_video.write_videofile(output_path, threads=multiprocessing.cpu_count())
         video.close()
+    return len(cut_segments)
 
 def merge_videos(videos_paths, final_video_name):
+    print(f"About to merge '{len(videos)}' videos")
     videos = []
     for video_path in videos_paths:
         try:
