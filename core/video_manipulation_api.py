@@ -31,7 +31,7 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
     if not cut_segments:
         print("No cuts found for the word passed")
     else:
-        print(f"'{len(cut_segments)}' cuts were found to create a video in '{video_path}'")
+        print(f"'{len(cut_segments)}' cuts were found in the video '{video_path}'")
         combined_video = concatenate_videoclips(cut_segments) 
         output_path = VIDEO_GENERATION_PATH + "/" + os.path.basename(video_path) 
         combined_video.write_videofile(output_path, threads=multiprocessing.cpu_count())
@@ -39,7 +39,7 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
     return len(cut_segments)
 
 def merge_videos(videos_paths, final_video_name):
-    print(f"About to merge '{len(videos)}' videos")
+    print(f"About to merge '{len(videos_paths)}' videos")
     videos = []
     for video_path in videos_paths:
         try:
