@@ -2,6 +2,8 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import concatenate_videoclips
 import os
 import multiprocessing
+from utils.constants import VIDEO_GENERATION_PATH, EXPORT_PATH
+import pathlib
 
 def cut_video(video, cuts, seconds_to_cut):
     cut_segments = []
@@ -30,6 +32,20 @@ def generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut):
     else:
         print(f"'{len(cut_segments)}' cuts were found to create a video in '{video_path}'")
         combined_video = concatenate_videoclips(cut_segments) 
-        output_path = "export/" + os.path.basename(video_path) 
+        output_path = VIDEO_GENERATION_PATH + "/" + os.path.basename(video_path) 
         combined_video.write_videofile(output_path, threads=multiprocessing.cpu_count())
+        video.close()
+
+def merge_videos(videos_paths, final_video_name):
+    videos = []
+    for video_path in videos_paths:
+        try:
+            videos.append(VideoFileClip(video_path)) 
+        except Exception as e:
+            print(f"Error loading video: {e}")
+            return None  
+    combined_videos = concatenate_videoclips(videos) 
+    output_path = EXPORT_PATH + "/" + final_video_name + pathlib.Path(videos_paths[0]).suffix 
+    combined_videos.write_videofile(output_path, threads=multiprocessing.cpu_count())
+    for video in videos:
         video.close()

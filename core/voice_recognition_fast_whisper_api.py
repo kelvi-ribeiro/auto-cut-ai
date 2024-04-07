@@ -1,6 +1,5 @@
 import utils.debug_utils as debug_utils
 import utils.json_filter_utils as json_filter
-import whisper_timestamped as whisper
 import utils.audio_manipulation_utils as audio_mp
 from faster_whisper import WhisperModel
 import json
