@@ -2,10 +2,13 @@
   "video_path": "test_videos/Excellent_5_Futebol_2024_04_06.mp4",
   "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\Test_Multiple_Videos",
   "keyword": "excellent",
-  "seconds_to_cut": 1,
+  "seconds_to_cut": 40,
   "useDebugFile": false,
   "language": "en",
   "whisper_model": "large-v3",
   "final_video_name":"Futebol_2024_04_06",
-  "minimum_confidence": 0.1
+  "minimum_confidence": 0.1,
+  "email_no_reply":"no.replay.kelvi.test@gmail.com",
+  "email_to":"kelvi.ribeiro@gmail.com",
+  "password_no_reply":""
 }
