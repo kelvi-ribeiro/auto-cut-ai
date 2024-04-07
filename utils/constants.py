@@ -1,5 +1,4 @@
 TEMP_PATH = "temp"
-EXTRACTED_AUTH_PATH = f"{TEMP_PATH}/extracted_audio.wav"
+AUDIO_PATH = f"{TEMP_PATH}/audio"
 EXPORT_PATH = "export"
-ENHENCED_AUTH_PATH = f"{TEMP_PATH}/audio_enhenced.wav"
 VIDEO_GENERATION_PATH = f"{TEMP_PATH}/video_generation"
