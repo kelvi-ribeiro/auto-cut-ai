@@ -1,8 +1,8 @@
 import io, json
 
-def save_debug_file(result): 
+def save_debug_file(times_of_each_keyword_spoken): 
      print("about to save the debug_file")
-     json_data = json.dumps(result, indent=4, ensure_ascii=False)
+     json_data = json.dumps(times_of_each_keyword_spoken, indent=4, ensure_ascii=False)
      with io.open('debug/debug.json', 'w', encoding='utf-8') as f:
         f.write(json_data)
 

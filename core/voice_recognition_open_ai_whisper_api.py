@@ -14,8 +14,17 @@ def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
             model = whisper.load_model(config["whisper_model"], device="cpu", in_memory = True)
             result = whisper.transcribe_timestamped(model, audio_enhenced_auth_path, language=config["language"], beam_size=5, best_of=5)
             print(f"Whisper processing finished in {datetime.datetime.now()}...")
+            result = map_json_data(result)
             debug_utils.save_debug_file(result)
     else:
         result = debug_utils.get_debug_file()
 
     return json_filter.filter_json_by_keyword(result, keyword)
+
+def map_json_data(json_data):
+    mapped_array = []
+    for segment in json_data["segments"]:
+        for word in segment["words"]:
+          mapped_array.append(word)
+
+    return mapped_array
