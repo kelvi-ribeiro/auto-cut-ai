@@ -16,6 +16,5 @@ def send_email(email_no_reply, email_to, password_no_reply, subject, msgBody):
         server.login(email_no_reply, password_no_reply)
         server.sendmail(email_no_reply, email_to, message.as_string())
         server.quit()
-        print("Email sent successfully!")
     except Exception as e:
         print(f"Error sending email: {e}")

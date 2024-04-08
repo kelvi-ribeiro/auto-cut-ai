@@ -12,9 +12,9 @@ from utils.email_utils import send_email
 
 def generate_cut_video(video_path, keyword, seconds_to_cut, useDebugFile, config, index, filesLen): 
     about_to_process_message = f"About to process the video '{get_filename_from_full_path(video_path)}' of {index + 1}/{filesLen}. "
-    print(f"About to process the video '{get_filename_from_full_path(video_path)}'")
+    print(about_to_process_message)
     send_email(config["email_no_reply"], config["email_to"], config["password_no_reply"], f"{config["final_video_name"]} update process status", about_to_process_message)
-    times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile)
+    times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(keyword, video_path, seconds_to_cut, useDebugFile)
     return video_manipulation.generate_video(video_path, times_of_each_keyword_spoken, seconds_to_cut)
 
 def generate_final_video():

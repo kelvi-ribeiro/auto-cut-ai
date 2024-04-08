@@ -7,7 +7,7 @@ import datetime
 from utils.file_utils import get_filename_from_full_path
 from utils.datetime_utils import get_datetime_without_milliseconds
 
-def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
+def get_times_of_each_keyword_spoken(keyword, video_path, seconds_to_cut, useDebugFile = False):
     if useDebugFile is False:
         print(f"Initiating whisper process in {get_datetime_without_milliseconds(datetime.datetime.now())} for the video {get_filename_from_full_path(video_path)}")
         with open('config.json') as config_file:
@@ -24,4 +24,4 @@ def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
     else:
         times_of_each_keyword_spoken = debug_utils.get_debug_file(video_path)
 
-    return json_filter.filter_json_by_keyword(times_of_each_keyword_spoken, keyword)
+    return json_filter.filter_json_by_keyword(times_of_each_keyword_spoken, keyword, seconds_to_cut)

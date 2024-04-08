@@ -5,7 +5,7 @@ import utils.audio_manipulation_utils as audio_mp
 import json
 import datetime
 
-def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
+def get_times_of_each_keyword_spoken(keyword, video_path, seconds_to_cut, useDebugFile = False):
     if useDebugFile is False:
         print(f"Initiating whisper process in {datetime.datetime.now()}...")
         with open('config.json') as config_file:
@@ -19,7 +19,7 @@ def get_times_of_each_keyword_spoken(keyword, video_path, useDebugFile = False):
     else:
         result = debug_utils.get_debug_file()
 
-    return json_filter.filter_json_by_keyword(result, keyword)
+    return json_filter.filter_json_by_keyword(result, keyword, seconds_to_cut)
 
 def map_json_data(json_data):
     mapped_array = []
