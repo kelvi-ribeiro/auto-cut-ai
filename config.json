@@ -1,6 +1,5 @@
 {
-  "video_path": "test_videos/Excellent_5_Futebol_2024_04_06.mp4",
-  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\Test_Multiple_Videos",
+  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\2024_04_06",
   "keyword": "excellent",
   "seconds_to_cut": 40,
   "useDebugFile": false,

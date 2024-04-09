@@ -19,9 +19,9 @@ def get_times_of_each_keyword_spoken(keyword, video_path, seconds_to_cut, useDeb
 
             for segment in segments:
                 for word in segment.words:
-                    times_of_each_keyword_spoken.append({'start': word.start, 'end':word.end, 'text':word.word, 'confidence':word.probability})
+                    times_of_each_keyword_spoken.append({'start': word.end  - seconds_to_cut, 'end': word.end + 1, 'text':word.word, 'confidence':word.probability})
             debug_utils.save_debug_file(times_of_each_keyword_spoken, video_path)
     else:
         times_of_each_keyword_spoken = debug_utils.get_debug_file(video_path)
 
-    return json_filter.filter_json_by_keyword(times_of_each_keyword_spoken, keyword, seconds_to_cut)
+    return json_filter.filter_json_by_keyword(times_of_each_keyword_spoken, keyword)
