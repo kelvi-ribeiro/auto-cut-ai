@@ -34,7 +34,7 @@ def generate_video(video_path, times_of_each_keyword_spoken, dir_to_save):
         combined_video = concatenate_videoclips(cut_segments) 
         combined_video.write_videofile(dir_to_save + "/" + get_filename_from_full_path(video_path), threads=multiprocessing.cpu_count())
         video.close()
-    return len(cut_segments)
+    return (len(cut_segments), sum(i['end'] - i['start']   for i in times_of_each_keyword_spoken))
 
 def merge_videos(videos_paths, final_video_name, dir_to_save):
     print(f"About to merge '{len(videos_paths)}' videos")
