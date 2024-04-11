@@ -5,9 +5,10 @@ import noisereduce as nr
 import moviepy.editor as mp
 from utils.constants import AUDIO_PATH
 from utils.file_utils import get_pathname_without_extension
+import os
 
 def generate_enhenced_audio(video_path):
-    extract_audio_path = f"{AUDIO_PATH}/{get_pathname_without_extension(video_path)}_extract.wav"
+    extract_audio_path = f"{AUDIO_PATH}{os.sep}{get_pathname_without_extension(video_path)}_extract.wav"
     clip = mp.VideoFileClip(video_path)
     clip.audio.write_audiofile(extract_audio_path)
     sr=44100

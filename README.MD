@@ -6,8 +6,11 @@ https://www.wikihow.com/Install-FFmpeg-on-Windows
 TODO: 
 
 
+- ADICIONAR MÚLTIPLOS KEYWORDS
 - NÃO VAI SER NECESSÁRIO ESCREVER O VÍDEO MERGEADO, AO INVÉS DISSO, PASSAR POR MEMÓRIA E SALVAR APENAS NO GENERATE CUT FINAL
 - TESTAR COM PALAVRA CORTAR OU CORTA 
+- UTILIZAR DIR TEMP DO SISTEMA AO INVÉS DO LOCAL
+- SE SÓ TIVER UM VÍDEO, NÃO PRECISA MERGEAR
 - IMPLEMENTAR FORMA DE SER POSSÍVEL PROCESSAMENTO PARCIAL, OU SEJA, SE DER PROBLEMA EM ALGUM VIDEO, AO RODAR O COMANDO PRA SER EXECUTADO DE NOVO, DEVE SER POSSÍVEL RETOMAR DA ONDE PAROU
 - VER SE É POSSÍVEL UTILIZAR EFEITO DE ROTATE https://zulko.github.io/moviepy/ref/videofx/moviepy.video.fx.all.rotate.html e mirror https://zulko.github.io/moviepy/ref/videofx/moviepy.video.fx.all.mirror_x.html
 - Refatorar trocando cada print pela lib de logging
