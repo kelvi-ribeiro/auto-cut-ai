@@ -1,8 +1,6 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import concatenate_videoclips
-from utils.file_utils import get_filename_from_full_path
 import multiprocessing
-import pathlib
 import os
 
 def cut_video(video, cuts):
@@ -20,24 +18,18 @@ def cut_video(video, cuts):
 
     return cut_segments
 
-def generate_video(video_path, times_of_each_keyword_spoken, dir_to_save):
+def generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, final_video_name):
     cut_segments = []
-    try:
-        video = VideoFileClip(video_path)
-    except Exception as e:
-        print(f"Error loading video: {e}")
-        return None  
-    cut_segments = cut_video(video, times_of_each_keyword_spoken)
+    cut_segments = cut_video(combined_videos, times_of_each_keyword_spoken)
     if not cut_segments:
         print("No cuts found for the word passed")
     else:
-        print(f"'{len(cut_segments)}' cuts were found in the video '{video_path}'")
+        print(f"'{len(cut_segments)}' cuts were found in the video '{final_video_name}'")
         combined_video = concatenate_videoclips(cut_segments) 
-        combined_video.write_videofile(f"{dir_to_save}{os.sep}{get_filename_from_full_path(video_path)}", threads=multiprocessing.cpu_count())
-        video.close()
+        combined_video.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=multiprocessing.cpu_count())
     return (len(cut_segments), sum(i['end'] - i['start']   for i in times_of_each_keyword_spoken))
 
-def merge_videos(videos_paths, final_video_name, dir_to_save):
+def merge_videos(videos_paths):
     print(f"About to merge '{len(videos_paths)}' videos")
     videos = []
     for video_path in videos_paths:
@@ -46,9 +38,9 @@ def merge_videos(videos_paths, final_video_name, dir_to_save):
         except Exception as e:
             print(f"Error loading video: {e}")
             return None  
-    combined_videos = concatenate_videoclips(videos) 
-    output_path = f"{dir_to_save}{os.sep}{final_video_name}{pathlib.Path(videos_paths[0]).suffix}"   
-    combined_videos.write_videofile(output_path, threads=multiprocessing.cpu_count())
-    for video in videos:
-        video.close()
-    return output_path
+    ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
+    ## video.close
+    if(len(videos) == 1):  
+        return videos[0]
+
+    return concatenate_videoclips(videos) 
