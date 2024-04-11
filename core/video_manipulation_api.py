@@ -1,5 +1,5 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
-from moviepy.editor import concatenate_videoclips
+from moviepy.editor import *
 import multiprocessing
 import os
 
@@ -18,15 +18,18 @@ def cut_video(video, cuts):
 
     return cut_segments
 
-def generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, final_video_name):
+def generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, final_video_name, masks_config):
     cut_segments = []
     cut_segments = cut_video(combined_videos, times_of_each_keyword_spoken)
     if not cut_segments:
         print("No cuts found for the word passed")
     else:
         print(f"'{len(cut_segments)}' cuts were found in the video '{final_video_name}'")
-        combined_video = concatenate_videoclips(cut_segments) 
-        combined_video.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=multiprocessing.cpu_count())
+        concatenated_videoclips = concatenate_videoclips(cut_segments) 
+        if masks_config["flip"] is True:
+            concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
+   
+        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=multiprocessing.cpu_count())
     return (len(cut_segments), sum(i['end'] - i['start']   for i in times_of_each_keyword_spoken))
 
 def merge_videos(videos_paths):

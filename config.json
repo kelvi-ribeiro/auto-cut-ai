@@ -1,13 +1,16 @@
 {
-  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\2024_04_06",
-  "keyword": "excellent",
-  "seconds_to_cut": 40,
-  "useDebugFile": false,
-  "language": "en",
+  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\Compilado\\Corta_4",
+  "keyword": "corta",
+  "seconds_to_cut": 3,
+  "useDebugFile": true,
+  "language": "pt",
   "whisper_model": "large-v3",
-  "final_video_name":"Futebol_2024_04_06",
-  "minimum_confidence": 0.1,
+  "final_video_name":"Corta_4",
+  "minimum_confidence": 0,
   "email_no_reply":"no.replay.kelvi.test@gmail.com",
   "email_to":"kelvi.ribeiro@gmail.com",
-  "password_no_reply":""
+  "password_no_reply":"",
+  "masks_config":{
+    "flip":true
+  }
 }

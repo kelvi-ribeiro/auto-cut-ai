@@ -15,7 +15,7 @@ def generate_cut_video(keyword, seconds_to_cut, useDebugFile, config, dir_to_sav
     print(about_to_process_message)
     send_email(config["email_no_reply"], config["email_to"], config["password_no_reply"], f"{config["final_video_name"]} update process status", about_to_process_message)
     times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(keyword, config["final_video_name"], seconds_to_cut, combined_videos, useDebugFile)
-    return video_manipulation.generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, config["final_video_name"])
+    return video_manipulation.generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, config["final_video_name"], config["masks_config"])
 
 def generate_final_video():
     totalCutsFound = 0

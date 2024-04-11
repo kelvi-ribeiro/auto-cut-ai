@@ -8,8 +8,8 @@ import os
 
 def generate_enhenced_audio(combined_videos, final_video_name):
     extract_audio_path = f"{AUDIO_PATH}{os.sep}{final_video_name}_extract.wav"
-    clip = mp.VideoFileClip(combined_videos)
-    clip.audio.write_audiofile(extract_audio_path)
+    # TODO TALVEZ AQUI TENHA QUE CLONAR O OBJETO PAR NÃO DAR SUBSITUIR O AUDIO ORIGINAL PELO MELHORADO
+    combined_videos.audio.write_audiofile(extract_audio_path)
     sr=44100
     with AudioFile(extract_audio_path).resampled_to(sr) as f:
         audio = f.read(f.frames)
