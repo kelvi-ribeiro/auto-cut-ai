@@ -18,7 +18,12 @@ def get_times_of_each_keyword_spoken(keyword, final_video_name, seconds_to_cut, 
 
             for segment in segments:
                 for word in segment.words:
-                    times_of_each_keyword_spoken.append({'start': word.end  - seconds_to_cut, 'end': word.end + 1, 'text':word.word, 'confidence':word.probability})
+                    end = word.end + 1
+                    start = word.end  - seconds_to_cut
+                    if(start < 0) :
+                        start = 0
+                        end = seconds_to_cut + 1
+                    times_of_each_keyword_spoken.append({'start': start, 'end': end, 'text':word.word, 'confidence':word.probability})
             debug_utils.save_debug_file(times_of_each_keyword_spoken, final_video_name)
     else:
         times_of_each_keyword_spoken = debug_utils.get_debug_file(final_video_name)

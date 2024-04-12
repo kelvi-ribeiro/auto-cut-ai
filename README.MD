@@ -6,7 +6,8 @@ https://www.wikihow.com/Install-FFmpeg-on-Windows
 TODO: 
 
 
-- NÃO VAI SER NECESSÁRIO ESCREVER O VÍDEO MERGEADO, AO INVÉS DISSO, PASSAR POR MEMÓRIA E SALVAR APENAS NO GENERATE CUT FINAL
+- ADICIONAR BARRA DE PROGRESO NO WHISPER ProgressBar handler · Issue #80 · SYSTRAN/faster-whisper · GitHub
+https://github.com/SYSTRAN/faster-whisper/issues/80
 - ADICIONAR CONFIG SECRET
 - ADICIONAR MÚLTIPLOS keywords
 - TESTAR COM PALAVRA CORTAR OU CORTA 
