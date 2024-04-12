@@ -8,7 +8,7 @@ def save_debug_file(times_of_each_keyword_spoken, final_video_name):
         f.write(json_data)
 
 def get_debug_file(final_video_name):
-     with open(get_debug_file_name(final_video_name)) as f:
+     with open(get_debug_file_name(final_video_name), 'r', encoding='utf-8') as f:
          return json.load(f)
 
 def get_debug_file_name(final_video_name):

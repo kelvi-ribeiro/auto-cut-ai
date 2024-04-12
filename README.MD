@@ -11,10 +11,9 @@ https://github.com/SYSTRAN/faster-whisper/issues/80
 - ADICIONAR CONFIG SECRET
 - ADICIONAR MÚLTIPLOS keywords
 - TESTAR COM PALAVRA CORTAR OU CORTA 
+- LER CONFIG EM UM SÓ LOCAL E PASSAR COMO PARÂMETRO ONDE PRECISA
 - UTILIZAR DIR TEMP DO SISTEMA AO INVÉS DO LOCAL
-- SE SÓ TIVER UM VÍDEO, NÃO PRECISA MERGEAR
 - IMPLEMENTAR FORMA DE SER POSSÍVEL PROCESSAMENTO PARCIAL, OU SEJA, SE DER PROBLEMA EM ALGUM VIDEO, AO RODAR O COMANDO PRA SER EXECUTADO DE NOVO, DEVE SER POSSÍVEL RETOMAR DA ONDE PAROU
-- VER SE É POSSÍVEL UTILIZAR EFEITO DE ROTATE https://zulko.github.io/moviepy/ref/videofx/moviepy.video.fx.all.rotate.html e mirror https://zulko.github.io/moviepy/ref/videofx/moviepy.video.fx.all.mirror_x.html
 - Refatorar trocando cada print pela lib de logging
 - DOCUMENTAR MELHOR O CÓDIGO
 

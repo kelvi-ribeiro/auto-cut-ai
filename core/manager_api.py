@@ -21,7 +21,7 @@ def generate_final_video():
     totalCutsFound = 0
     generic_utils.create_temp_dir()
     start_time = dt.datetime.now()
-    with open('config.json') as config_file:
+    with open('config.json', 'r', encoding='utf-8') as config_file:
         config = json.load(config_file)
     
     print(f"Initiating main process at {get_datetime_without_milliseconds(start_time)}...")
