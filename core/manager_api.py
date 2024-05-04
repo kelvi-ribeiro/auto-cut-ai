@@ -29,7 +29,7 @@ def generate_final_video():
     
     print(f"Initiating main process at {get_datetime_without_milliseconds(start_time)}...")
     try:
-        print(f"About to merge all videos to not have problems with cuts between the videos")
+        print("About to merge all videos to not have problems with cuts between the videos")
         files = [os.path.join(config["videos_path_dir"], file) for file in os.listdir(config["videos_path_dir"]) if os.path.isfile(os.path.join(config["videos_path_dir"], file))]
         combined_videos = video_manipulation.merge_videos(files)
         (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, EXPORT_PATH, combined_videos)

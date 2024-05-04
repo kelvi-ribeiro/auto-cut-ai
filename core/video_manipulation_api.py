@@ -2,6 +2,7 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import *
 import multiprocessing
 import os
+from utils.constants import MIN_VIDEO_SECONDS
 
 def cut_video(video, cuts):
     cut_segments = []
@@ -32,16 +33,20 @@ def generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, f
     return (total_cuts, sum(i['end'] - i['start'] for i in times_of_each_keyword_spoken))
 
 def merge_videos(videos_paths):
-    print(f"About to merge '{len(videos_paths)}' videos")
     videos = []
     for video_path in videos_paths:
         try:
-            videos.append(VideoFileClip(video_path)) 
+            video = VideoFileClip(video_path)
+            if video.duration >= MIN_VIDEO_SECONDS:
+                videos.append(VideoFileClip(video_path)) 
+            else:
+                print(f"Ignoring the video '{video_path}' because it is less than '{MIN_VIDEO_SECONDS}' seconds")
         except Exception as e:
             print(f"Error loading video: {e}")
             return None  
     ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
     ## video.close
+    print(f"About to merge '{len(videos)}' videos")
     if(len(videos) == 1):  
         return videos[0]
 
