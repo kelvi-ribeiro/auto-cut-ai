@@ -3,9 +3,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email(email_Config, subject, msgBody):    
-    email_no_reply = email_Config["email_no_reply"]
-    email_to = email_Config["email_to"]
-    password = email_Config["password"]
+    email_no_reply = email_Config['email_no_reply']
+    email_to = email_Config['email_to']
+    password = email_Config['password']
     message = MIMEMultipart()
     message['From'] = email_no_reply
     message['To'] = email_to

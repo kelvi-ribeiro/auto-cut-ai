@@ -26,7 +26,7 @@ def generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, f
     else:
         print(f"'{total_cuts}' cuts were found in the video '{final_video_name}'")
         concatenated_videoclips = concatenate_videoclips(cut_segments) 
-        if masks_config["flip"] is True:
+        if masks_config['flip'] is True:
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
    
         concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=multiprocessing.cpu_count())
