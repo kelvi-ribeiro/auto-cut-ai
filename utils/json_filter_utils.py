@@ -3,7 +3,7 @@ import utils.string_utils as string_utils
 import utils.debug_utils as debug_utils
 import json
 
-def filter_json_by_keyword(times_of_each_keyword_spoken, keyword): ## TODO MELHORAR NOME
+def extract_keyword_occurrences(times_of_each_keyword_spoken, keyword): 
     filtered_results = []
     print(f"About to map the '{keyword}' in result" )
     with open('config.json') as config_file:

@@ -3,8 +3,6 @@
   "keyword": "transição",
   "seconds_to_cut": 45,
   "use_debug_file": false,
-  "language": "pt",
-  "whisper_model": "large-v3",
   "final_video_name":"Futebol_2024_04_27",
   "minimum_confidence": 0,
   "masks_config":{
