@@ -19,7 +19,7 @@ def generate_cut_video(config, email_config, dir_to_save, combined_videos):
 
 def generate_final_video():
     totalCutsFound = 0
-    generic_utils.create_temp_dir()
+    generic_utils.create_functional_dir()
     start_time = dt.datetime.now()
     with open('config.json', 'r', encoding='utf-8') as config_file:
         config = json.load(config_file)
