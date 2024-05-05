@@ -1,11 +1,15 @@
 choco install ffmpeg e colocar na variável de ambiente
 
 https://www.wikihow.com/Install-FFmpeg-on-Windows
-
+pip install -r requirements.txt
 
 TODO: 
 
-
+- CRIAR PASTA debug FILES AUTOMATICAMENTE
+- CRIAR PASTA export FILES AUTOMATICAMENTE
+- TESTAR NO WINDOWS DO ZERO
+- CRIAR HOW TO INSTALL ON LINUX AND WINDOWS
+- REMOVER LÓGICA DE SECONDS_TO_CUT do reconhecimento de fala e colocar no filtrador
 - ADICIONAR BARRA DE PROGRESO NO WHISPER ProgressBar handler · Issue #80 · SYSTRAN/faster-whisper · GitHub
 https://github.com/SYSTRAN/faster-whisper/issues/80
 - ADICIONAR CONFIG SECRET

@@ -40,7 +40,7 @@ def merge_videos(videos_paths):
             if video.duration >= MIN_VIDEO_SECONDS:
                 videos.append(VideoFileClip(video_path)) 
             else:
-                print(f"Ignoring the video '{video_path}' because it is less than '{MIN_VIDEO_SECONDS}' seconds")
+                print(f"Ignoring the video '{video_path}' with '{video.duration}' seconds because it is less than '{MIN_VIDEO_SECONDS}', the minimum allowed seconds")
         except Exception as e:
             print(f"Error loading video: {e}")
             return None  

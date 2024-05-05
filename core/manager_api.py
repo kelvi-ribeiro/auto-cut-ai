@@ -13,7 +13,7 @@ from utils.email_utils import send_email
 def generate_cut_video(config, email_config, dir_to_save, combined_videos): 
     about_to_process_message = f"About to process the video '{config['final_video_name']}'. "
     print(about_to_process_message)
-    send_email(email_config['email_no_reply'], email_config['email_to'], email_config['password'], f"{config['final_video_name']} update process status", about_to_process_message)
+    send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
     times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config['keyword'], config['final_video_name'], config['seconds_to_cut'], combined_videos, config['use_debug_file'])
     return video_manipulation.generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, config['final_video_name'], config['masks_config'])
 
