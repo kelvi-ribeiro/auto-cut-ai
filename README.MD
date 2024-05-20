@@ -1,7 +1,15 @@
-choco install ffmpeg e colocar na variável de ambiente
 
-https://www.wikihow.com/Install-FFmpeg-on-Windows
-pip install -r requirements.txt
+## Running on windows
+
+1. Install [FFmpeg](https://www.wikihow.com/Install-FFmpeg-on-Windows)
+2. pip install -r requirements.txt
+3. python .\main.py  
+
+
+## Running on linux
+
+1. pip install -r requirements.txt
+2. python main.py 
 
 TODO: 
 
