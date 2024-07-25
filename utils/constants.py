@@ -6,6 +6,4 @@ AUDIO_PATH = f"{TEMP_PATH}{os.sep}audio"
 EXPORT_PATH = "export"
 DEBUG_PATH = "debug" 
 VIDEO_GENERATION_PATH = f"{TEMP_PATH}{os.sep}video_generation"
-WHISPER_MODEL = "large-v3"
-WHISPER_LANGUAGE = "pt"
 MIN_VIDEO_SECONDS = 20

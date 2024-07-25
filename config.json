@@ -1,10 +1,12 @@
 {
-  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Futebol\\2024\\2024_04_27",
+  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Dev_Projects\\Automatic_Video_Edition\\2024_04_27",
   "keyword": "transição",
-  "seconds_to_cut": 45,
+  "seconds_to_cut": 20,
   "use_debug_file": false,
   "final_video_name":"Futebol_2024_04_27",
   "minimum_confidence": 0,
+  "whisper_language":"pt",
+  "whisper_model":"large-v3",
   "masks_config":{
     "flip":true
   }
