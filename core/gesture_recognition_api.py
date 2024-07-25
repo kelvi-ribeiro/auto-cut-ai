@@ -21,6 +21,13 @@ def is_hand_open(hand_landmarks):
     # Verificar se todos os dedos estão afastados do pulso
     return all(finger_tip.y < wrist.y for finger_tip in [thumb_tip, index_finger_tip, middle_finger_tip, ring_finger_tip, pinky_tip])
 
+def is_rock_sign(hand_landmarks):
+    if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y < hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_DIP].y and
+        hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y < hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_DIP].y and
+        hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_DIP].y and
+        hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_DIP].y):
+        return True
+    return False
 
 ## TODO MUDAR NOME DO MÉTODO PARA ALGUMA COISA DE GESTURE FEITO
 def get_times_of_each_cut(config, combined_videos):
@@ -41,9 +48,9 @@ def get_times_of_each_cut(config, combined_videos):
 
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                if is_hand_open(hand_landmarks):
+                if is_rock_sign(hand_landmarks):
                     seconds = frame_count / fps
-                    print(f"Mão aberta detectada no segundo: {seconds:.2f}")
+                    print(f"Gesto de corte detectado no segundo: {seconds:.2f}")
                     last_index = len(times_of_each_cut) - 1                         
                     if last_index >= 0 and (seconds - times_of_each_cut[last_index]['end']) <= seconds_considered_same_gesture:
                         times_of_each_cut[last_index]['end'] = seconds
