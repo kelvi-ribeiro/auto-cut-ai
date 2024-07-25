@@ -1,39 +1,40 @@
+### Introduction
 
-## Running on windows
+This Python project utilizes artificial intelligence to perform intelligent video cuts based on detected keywords in audio. When a specific word, such as "cut" (configurable as a parameter), is identified, the program automatically segments the video, which can be repeated throughout the entire video. The goal is to simplify the editing of lengthy videos using these tools.
+
+## Dependencies
+
+- ![MoviePy](https://img.shields.io/badge/MoviePy-v1.0.3-blue)
+- ![Pedalboard](https://img.shields.io/badge/Pedalboard-v0.9.3-orange)
+- ![Fast_Whisper](https://img.shields.io/badge/Fast_Whisper-v1.0.0-green)
+
+## Running on Windows
 
 1. Install [FFmpeg](https://www.wikihow.com/Install-FFmpeg-on-Windows)
-2. pip install -r requirements.txt
-3. python .\main.py  
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Run the project:
+   ```
+   python .\main.py
+   ```
 
+## Running on Linux
 
-## Running on linux
+1. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+2. Run the project:
+   ```
+   python main.py
+   ```
 
-1. pip install -r requirements.txt
-2. python main.py 
+### Backlog:
 
-TODO: 
-
-- CRIAR PASTA debug FILES AUTOMATICAMENTE
-- CRIAR PASTA export FILES AUTOMATICAMENTE
-- TESTAR NO WINDOWS DO ZERO
-- CRIAR HOW TO INSTALL ON LINUX AND WINDOWS
-- REMOVER LÓGICA DE SECONDS_TO_CUT do reconhecimento de fala e colocar no filtrador
-- ADICIONAR BARRA DE PROGRESO NO WHISPER ProgressBar handler · Issue #80 · SYSTRAN/faster-whisper · GitHub
-https://github.com/SYSTRAN/faster-whisper/issues/80
-- ADICIONAR CONFIG SECRET
-- ADICIONAR MÚLTIPLOS keywords
-- TESTAR COM PALAVRA CORTAR OU CORTA 
-- LER CONFIG EM UM SÓ LOCAL E PASSAR COMO PARÂMETRO ONDE PRECISA
-- UTILIZAR DIR TEMP DO SISTEMA AO INVÉS DO LOCAL
-- IMPLEMENTAR FORMA DE SER POSSÍVEL PROCESSAMENTO PARCIAL, OU SEJA, SE DER PROBLEMA EM ALGUM VIDEO, AO RODAR O COMANDO PRA SER EXECUTADO DE NOVO, DEVE SER POSSÍVEL RETOMAR DA ONDE PAROU
-- Refatorar trocando cada print pela lib de logging
-- DOCUMENTAR MELHOR O CÓDIGO
-
-
-BACKLOG:
-
-- IMPLEMENTAR VERSÃO QUE CORTE AUTOMÁTICO POR SEGUNDO LOGO APÓS PALAVRA CHAVE, EM CASO DE NÃO DETECTAR, USAR TEMPO DEFAULT
-- REFATORAR
-- TESTAR TESTAR TESTAR
-- TEMPO ESTIMADO DE PROCESSAMENTO
-- PENSAR NO QUE FAZER COM O CÓDIGO, ABRIR OU CRIAR UM PRODUTO, SERIA LEGAL CRIAR UMA API INTERNA LOCAL EXPOSTA PARA O MUNDO SÓ COMO EXBIÇÃO E DEPOIS TENTAR O DEPLOY DISSO
+- Implement video cutting by gesture.
+- Implement automatic cutting after detecting keywords; use default time if not detected.
+- Estimate processing time.
+- Test from scratch on Windows.
+- Implement partial processing to resume from interruption points in videos.
