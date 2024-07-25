@@ -16,8 +16,8 @@ def generate_cut_video(config, email_config, dir_to_save, combined_videos):
     print(about_to_process_message)
     send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
     ## TODO - times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
-    times_of_each_keyword_spoken = gesture_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
-    return video_manipulation.generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, config['final_video_name'], config['masks_config'])
+    times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, combined_videos)
+    return video_manipulation.generate_video(combined_videos, times_of_each_cut, dir_to_save, config['final_video_name'], config['masks_config'])
 
 def generate_final_video():
     totalCutsFound = 0

@@ -1,7 +1,5 @@
 import cv2
 import mediapipe as mp
-import numpy as np
-from moviepy.editor import VideoFileClip
 
 # Inicializando a MediaPipe Hands
 mp_hands = mp.solutions.hands
@@ -24,12 +22,13 @@ def is_hand_open(hand_landmarks):
     return all(finger_tip.y < wrist.y for finger_tip in [thumb_tip, index_finger_tip, middle_finger_tip, ring_finger_tip, pinky_tip])
 
 
-
-def get_times_of_each_keyword_spoken(config, combined_videos):
+## TODO MUDAR NOME DO MÉTODO PARA ALGUMA COISA DE GESTURE FEITO
+def get_times_of_each_cut(config, combined_videos):
     cap = cv2.VideoCapture(combined_videos.filename)
     fps = cap.get(cv2.CAP_PROP_FPS)
     frame_count = 0
-    times_of_each_keyword_spoken = []
+    times_of_each_cut = []
+    seconds_considered_same_gesture = 3
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -44,13 +43,17 @@ def get_times_of_each_keyword_spoken(config, combined_videos):
             for hand_landmarks in results.multi_hand_landmarks:
                 if is_hand_open(hand_landmarks):
                     seconds = frame_count / fps
-                    print(f"Mão aberta detectada no segundo: {seconds:.2f}")                        
-                    times_of_each_keyword_spoken.append({
-                        'start': seconds - config["seconds_to_cut"],
-                        'end': seconds + 4,
-                        'cuts_count': 1
-                        }) 
-                    break
-                 
+                    print(f"Mão aberta detectada no segundo: {seconds:.2f}")
+                    last_index = len(times_of_each_cut) - 1                         
+                    if last_index >= 0 and (seconds - times_of_each_cut[last_index]['end']) <= seconds_considered_same_gesture:
+                        times_of_each_cut[last_index]['end'] = seconds
+                    else: 
+                        times_of_each_cut.append({
+                            'start': seconds,
+                            'end': seconds,
+                            'cuts_count': 1
+                        })
+                    break  # Pode parar na primeira mão aberta detectada por frame
+    
     cap.release()
-    return times_of_each_keyword_spoken
+    return times_of_each_cut
