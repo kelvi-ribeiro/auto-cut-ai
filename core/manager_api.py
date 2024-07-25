@@ -11,12 +11,12 @@ from utils.datetime_utils import get_datetime_without_milliseconds
 from utils.number_utils  import get_pretty_minutes
 from utils.email_utils import send_email
 
-def generate_cut_video(config, email_config, dir_to_save, combined_videos): 
+def generate_cut_video(config, files, email_config, dir_to_save, combined_videos): 
     about_to_process_message = f"About to process the video '{config['final_video_name']}'. "
     print(about_to_process_message)
     send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
     ## TODO - times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
-    times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, combined_videos)
+    times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, files)
     return video_manipulation.generate_video(combined_videos, times_of_each_cut, dir_to_save, config['final_video_name'], config['masks_config'])
 
 def generate_final_video():
@@ -34,7 +34,7 @@ def generate_final_video():
         print("About to merge all videos to not have problems with cuts between the videos")
         files = [os.path.join(config['videos_path_dir'], file) for file in os.listdir(config['videos_path_dir']) if os.path.isfile(os.path.join(config['videos_path_dir'], file))]
         combined_videos = video_manipulation.merge_videos(files)
-        (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, config_secret["email_config"], EXPORT_PATH, combined_videos)
+        (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, files, config_secret["email_config"], EXPORT_PATH, combined_videos)
         end_time = dt.datetime.now()
         processing_time = (end_time - start_time).total_seconds() / 60
         finalLogMessage = f"Finishing main process at {get_datetime_without_milliseconds(end_time)}.\n Processing time: '{processing_time:.2f}' minutes\n'{len(files)}' videos processed and '{totalCutsFound}' total cuts found and '{get_pretty_minutes(sum_seconds_total_video / 60)}' minutes of video."
