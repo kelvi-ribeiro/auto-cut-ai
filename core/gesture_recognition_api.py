@@ -1,58 +1,56 @@
 import cv2
 import mediapipe as mp
+import numpy as np
+from moviepy.editor import VideoFileClip
 
-# Inicializa o módulo MediaPipe Hands
+# Inicializando a MediaPipe Hands
 mp_hands = mp.solutions.hands
-hands = mp_hands.Hands()
+hands = mp_hands.Hands(static_image_mode=False,
+                       max_num_hands=1,
+                       min_detection_confidence=0.5,
+                       min_tracking_confidence=0.5)
 
-# Função para detectar o gesto de joinha no quadro atual
-def detect_thumb_up(frame):
-    # Converte a imagem para tons de cinza
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+def is_hand_open(hand_landmarks):
+    # Verificar se a mão está aberta com base nas posições dos pontos
+    thumb_tip = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
+    index_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
+    middle_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP]
+    ring_finger_tip = hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP]
+    pinky_tip = hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP]
+    
+    wrist = hand_landmarks.landmark[mp_hands.HandLandmark.WRIST]
+    
+    # Verificar se todos os dedos estão afastados do pulso
+    return all(finger_tip.y < wrist.y for finger_tip in [thumb_tip, index_finger_tip, middle_finger_tip, ring_finger_tip, pinky_tip])
 
-    # Detecta as mãos na imagem em tons de cinza
-    results = hands.process(gray)
 
-    # Verifica se pelo menos uma mão foi detectada
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            # Verifica a posição do polegar (ID 4) e do indicador (ID 8)
-            thumb_up = hand_landmarks.landmark[4].y < hand_landmarks.landmark[8].y
 
-            if thumb_up:
-                return True
+def get_times_of_each_keyword_spoken(config, combined_videos):
+    cap = cv2.VideoCapture(combined_videos.filename)
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_count = 0
+    times_of_each_keyword_spoken = []
 
-    return False
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+        
+        frame_count += 1
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands.process(frame_rgb)
 
-# Abre o vídeo
-cap = cv2.VideoCapture('Polegar_Pra_Cima.mp4')
-
-# Lista para armazenar os segundos de início de cada gesto de joinha
-thumbs_up_times = []
-
-# Loop para processar cada quadro do vídeo
-while cap.isOpened():
-    ret, frame = cap.read()
-
-    if not ret:
-        break
-
-    # Detecta o gesto de joinha no quadro atual
-    if detect_thumb_up(frame):
-        # Armazena o segundo de início do gesto de joinha
-        thumbs_up_times.append(cap.get(cv2.CAP_PROP_POS_MSEC) / 1000)  # Converte para segundos
-
-    # Exibe o quadro
-    cv2.imshow('Video', frame)
-
-    # Verifica se a tecla 'q' foi pressionada para sair do loop
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Libera os recursos
-cap.release()
-cv2.destroyAllWindows()
-
-# Imprime os segundos de início de cada gesto de joinha
-print("Segundos de início de cada gesto de joinha:")
-print(thumbs_up_times)
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                if is_hand_open(hand_landmarks):
+                    seconds = frame_count / fps
+                    print(f"Mão aberta detectada no segundo: {seconds:.2f}")                        
+                    times_of_each_keyword_spoken.append({
+                        'start': seconds - config["seconds_to_cut"],
+                        'end': seconds + 4,
+                        'cuts_count': 1
+                        }) 
+                    break
+                 
+    cap.release()
+    return times_of_each_keyword_spoken

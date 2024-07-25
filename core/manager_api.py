@@ -1,6 +1,7 @@
 
 import core.video_manipulation_api as video_manipulation
 import core.voice_recognition_api as voice_recognition
+import core.gesture_recognition_api as gesture_recognition
 import utils.generic_utils as generic_utils
 import json
 import datetime as dt
@@ -14,7 +15,8 @@ def generate_cut_video(config, email_config, dir_to_save, combined_videos):
     about_to_process_message = f"About to process the video '{config['final_video_name']}'. "
     print(about_to_process_message)
     send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
-    times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
+    ## TODO - times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
+    times_of_each_keyword_spoken = gesture_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
     return video_manipulation.generate_video(combined_videos, times_of_each_keyword_spoken, dir_to_save, config['final_video_name'], config['masks_config'])
 
 def generate_final_video():
