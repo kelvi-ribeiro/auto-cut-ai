@@ -22,7 +22,7 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, final_video_
     cut_segments = []
     cut_segments, total_cuts = cut_video(combined_videos, times_of_each_cut)
     if not cut_segments:
-        print("No cuts found for the word passed")
+        print("No cuts found")
     else:
         print(f"'{total_cuts}' cuts were found in the video '{final_video_name}'")
         concatenated_videoclips = concatenate_videoclips(cut_segments) 

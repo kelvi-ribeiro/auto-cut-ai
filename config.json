@@ -1,11 +1,12 @@
 {
-  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Dev_Projects\\Automatic_Video_Edition\\2024_04_27",
-  "keyword": "transição",
-  "seconds_to_cut": 20,
+  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Dev_Projects\\Automatic_Video_Edition\\Futebol_Completo_Teste",
+  "keyword": "excellent",
+  "recognition_type":"gesture",
+  "seconds_to_cut": 2,
   "use_debug_file": false,
-  "final_video_name":"Futebol_2024_04_27",
-  "minimum_confidence": 0,
-  "whisper_language":"pt",
+  "final_video_name":"Test",
+  "minimum_confidence": 0.75,
+  "whisper_language":"en",
   "whisper_model":"large-v3",
   "masks_config":{
     "flip":true

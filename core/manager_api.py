@@ -12,11 +12,14 @@ from utils.number_utils  import get_pretty_minutes
 from utils.email_utils import send_email
 
 def generate_cut_video(config, files, email_config, dir_to_save, combined_videos): 
+    recognition_type = config["recognition_type"]
     about_to_process_message = f"About to process the video '{config['final_video_name']}'. "
     print(about_to_process_message)
     send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
-    ## TODO - times_of_each_keyword_spoken = voice_recognition.get_times_of_each_keyword_spoken(config, combined_videos)
-    times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, files)
+    if recognition_type == "gesture":
+        times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, files)
+    else:
+        times_of_each_cut = voice_recognition.get_times_of_each_cut(config, combined_videos)
     return video_manipulation.generate_video(combined_videos, times_of_each_cut, dir_to_save, config['final_video_name'], config['masks_config'])
 
 def generate_final_video():

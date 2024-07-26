@@ -5,7 +5,7 @@ from faster_whisper import WhisperModel
 import datetime
 from utils.datetime_utils import get_datetime_without_milliseconds
 
-def get_times_of_each_keyword_spoken(config, combined_videos):
+def get_times_of_each_cut(config, combined_videos):
     keyword = config['keyword']
     final_video_name = config['final_video_name']
     seconds_to_cut = config['seconds_to_cut']
@@ -14,7 +14,6 @@ def get_times_of_each_keyword_spoken(config, combined_videos):
     whisper_model = config['whisper_model']
 
     if not use_debug_file:
-        ## TODO TIRAR DAQUI
         print(f"Initiating whisper process at {get_datetime_without_milliseconds(datetime.datetime.now())} for the video '{final_video_name}'")
         
         audio_enhanced_path = audio_mp.generate_enhenced_audio(combined_videos, final_video_name)
