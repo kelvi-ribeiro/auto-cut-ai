@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+from utils.file_utils import get_filename_from_full_path
+from hands_gestures import is_peace_sign
 
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(static_image_mode=False,
@@ -7,22 +9,14 @@ hands = mp_hands.Hands(static_image_mode=False,
                        min_detection_confidence=0.5,
                        min_tracking_confidence=0.5)
 
-def is_peace_sign(hand_landmarks):
-    if (hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y < hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_DIP].y and
-        hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y < hand_landmarks.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_DIP].y and
-        hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.RING_FINGER_DIP].y and
-        hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_TIP].y > hand_landmarks.landmark[mp_hands.HandLandmark.PINKY_DIP].y):
-        return True
-    return False
-
 def get_times_of_each_cut(config, files):
     times_of_each_cut = []
     videos_duration = []
     for idx, file in enumerate(files):
-        print(f"Gesture processing of video '{file}'")
+        print(f"Gesture processing '{idx + 1}/{len(files)}'. Video: '{get_filename_from_full_path(file)}'.")
         cap = cv2.VideoCapture(file)
         fps = cap.get(cv2.CAP_PROP_FPS)
-        seconds_considered_same_gesture = 3
+        seconds_considered_same_gesture = 4
         frame_interval = int(fps)  
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         current_video_duration = frame_count / fps
@@ -52,7 +46,7 @@ def get_times_of_each_cut(config, files):
                             times_of_each_cut[last_index]['end'] = seconds
                         else: 
                             times_of_each_cut.append({
-                                'start': seconds, ## TODO ALTERAR TEMPO
+                                'start': seconds - config['seconds_to_cut'],
                                 'end': seconds + 1,
                                 'cuts_count': 1
                             })
