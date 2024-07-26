@@ -1,7 +1,7 @@
 
 import core.video_manipulation_api as video_manipulation
 import core.voice_recognition_api as voice_recognition
-import core.gesture_recognition_api as gesture_recognition
+import core.gesture_recognition.gesture_recognition_api as gesture_recognition
 import utils.generic_utils as generic_utils
 import json
 import datetime as dt

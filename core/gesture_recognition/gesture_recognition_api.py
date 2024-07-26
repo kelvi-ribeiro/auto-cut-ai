@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 from utils.file_utils import get_filename_from_full_path
-from hands_gestures import is_peace_sign
+from core.gesture_recognition.hands_gestures import is_peace_sign
 
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(static_image_mode=False,
