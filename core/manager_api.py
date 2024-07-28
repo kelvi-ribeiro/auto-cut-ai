@@ -1,8 +1,7 @@
 
 import core.video_manipulation_api as video_manipulation
-import core.voice_recognition_api as voice_recognition
-import core.gesture_recognition.gesture_recognition_api as gesture_recognition
-import core.screen_color_recognition_api as screen_color_recognition
+from core.gesture_recognition.gesture_recognition import GestureRecognition
+from core.screen_color_recognition import ScreenColorRecognition
 import utils.generic_utils as generic_utils
 import json
 import datetime as dt
@@ -11,18 +10,26 @@ from utils.constants import EXPORT_PATH
 from utils.datetime_utils import get_datetime_without_milliseconds
 from utils.number_utils  import get_pretty_minutes
 from utils.email_utils import send_email
+from utils.debug_utils import get_debug_file, save_debug_file
 
 def generate_cut_video(config, files, email_config, dir_to_save, combined_videos): 
     recognition_type = config["recognition_type"]
-    about_to_process_message = f"About to process the video '{config['final_video_name']}'. "
+    use_debug_file = config["use_debug_file"]
+    final_video_name = config["final_video_name"]
+    about_to_process_message = f"About to process the video '{final_video_name}'. "
     print(about_to_process_message)
-    send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
-    if recognition_type == "gesture":
-        times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, files)
-    elif recognition_type == "screen_color":
-        times_of_each_cut = screen_color_recognition.get_times_of_each_cut(config, files)
+    send_email(email_config, f"{final_video_name} update process status", about_to_process_message)
+    times_of_each_cut = []
+    if not use_debug_file:
+        if recognition_type == "screen_color":
+            recognition_processor = ScreenColorRecognition(files, config)
+        elif recognition_type == "gesture_recognition":
+            recognition_processor = GestureRecognition(files, config)
+            
+        times_of_each_cut = recognition_processor.process()
+        save_debug_file(times_of_each_cut, final_video_name)
     else:
-        times_of_each_cut = voice_recognition.get_times_of_each_cut(config, combined_videos)
+        times_of_each_cut = get_debug_file(final_video_name)
     return video_manipulation.generate_video(combined_videos, times_of_each_cut, dir_to_save, config['final_video_name'], config['masks_config'])
 
 def generate_final_video():
