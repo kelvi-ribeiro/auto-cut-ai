@@ -1,8 +1,8 @@
 {
-  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Dev_Projects\\Automatic_Video_Edition\\Futebol_Completo_Teste",
+  "videos_path_dir":"D:\\video",
   "keyword": "excellent",
-  "recognition_type":"gesture",
-  "seconds_to_cut": 2,
+  "recognition_type":"screen_color",
+  "seconds_to_cut": 40,
   "use_debug_file": false,
   "final_video_name":"Test",
   "minimum_confidence": 0.75,

@@ -2,6 +2,7 @@
 import core.video_manipulation_api as video_manipulation
 import core.voice_recognition_api as voice_recognition
 import core.gesture_recognition.gesture_recognition_api as gesture_recognition
+import core.screen_color_recognition_api as screen_color_recognition
 import utils.generic_utils as generic_utils
 import json
 import datetime as dt
@@ -18,6 +19,8 @@ def generate_cut_video(config, files, email_config, dir_to_save, combined_videos
     send_email(email_config, f"{config['final_video_name']} update process status", about_to_process_message)
     if recognition_type == "gesture":
         times_of_each_cut = gesture_recognition.get_times_of_each_cut(config, files)
+    elif recognition_type == "screen_color":
+        times_of_each_cut = screen_color_recognition.get_times_of_each_cut(config, files)
     else:
         times_of_each_cut = voice_recognition.get_times_of_each_cut(config, combined_videos)
     return video_manipulation.generate_video(combined_videos, times_of_each_cut, dir_to_save, config['final_video_name'], config['masks_config'])
