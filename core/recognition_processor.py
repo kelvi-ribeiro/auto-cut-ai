@@ -15,12 +15,16 @@ class RecognitionProcessor:
 
     def add_time_cut(self, seconds_considered_same_gesture, seconds):
         last_index = len(self.times_of_each_cut) - 1
+        start_time = seconds - self.config['seconds_to_cut']
+        end = seconds
+        if start_time == end:
+            end = seconds + 1
         if last_index >= 0 and (seconds - self.times_of_each_cut[last_index]['end']) <= seconds_considered_same_gesture:
             self.times_of_each_cut[last_index]['end'] = seconds
         else:
             self.times_of_each_cut.append({
-                                    'start': seconds - self.config['seconds_to_cut'],
-                                    'end': seconds + 1,
+                                    'start': start_time,
+                                    'end': seconds,
                                     'cuts_count': 1
                                 })
     def get_times_cut_with_removed_duplicates(self):
