@@ -1,12 +1,12 @@
 {
-  "videos_path_dir":"D:\\video",
-  "keyword": "excellent",
-  "recognition_type":"screen_color",
-  "seconds_to_cut": 40,
-  "use_debug_file": false,
+  "videos_path_dir":"C:\\Users\\kelvi-ribeiro\\Videos\\Dev_Projects\\Automatic_Video_Edition\\Massa_Teste",
+  "keyword": "transição",
+  "recognition_type":"voice_recognition",
+  "seconds_to_cut": 25,
+  "use_saved_result_file": false,
   "final_video_name":"Test",
   "minimum_confidence": 0.75,
-  "whisper_language":"en",
+  "whisper_language":"pt",
   "whisper_model":"large-v3",
   "masks_config":{
     "flip":true
