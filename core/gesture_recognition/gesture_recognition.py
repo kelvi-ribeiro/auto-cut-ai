@@ -44,7 +44,7 @@ class GestureRecognition(RecognitionProcessor):
                                 seconds += sum(self.videos_duration)
 
                             print(f"Gesture detected at second: '{seconds:.2f}'")
-                            self.add_time_cut(seconds_considered_same_gesture, seconds)
+                            self.add_time_cut(seconds, seconds_considered_same_gesture)
                             break
             self.videos_duration.append(current_video_duration)
             cap.release()

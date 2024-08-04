@@ -1,11 +1,12 @@
 from utils.file_utils import get_filename_from_full_path
 
 class RecognitionProcessor:
-    def __init__(self, files, config):
+    def __init__(self, files, config, combined_videos = []):
         self.files = files
         self.videos_duration = []
         self.times_of_each_cut = []
         self.config = config
+        self.combined_videos = combined_videos
 
     def process(self):
         raise NotImplementedError("Subclasses should implement this method.")
@@ -13,9 +14,9 @@ class RecognitionProcessor:
     def print_process_status(self, idx, file):
         print(f"Processing '{idx + 1}/{len(self.files)}'. Video: '{get_filename_from_full_path(file)}'.")
 
-    def add_time_cut(self, seconds_considered_same_gesture, seconds):
+    def add_time_cut(self, seconds, seconds_considered_same_gesture = 0):
         last_index = len(self.times_of_each_cut) - 1
-        start_time = seconds - self.config['seconds_to_cut']
+        start_time = max(seconds - self.config['seconds_to_cut'], 0) 
         end = seconds
         if start_time == end:
             end = seconds + 1

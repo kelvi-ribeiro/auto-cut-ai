@@ -2,6 +2,7 @@
 import core.video_manipulation_api as video_manipulation
 from core.gesture_recognition.gesture_recognition import GestureRecognition
 from core.screen_color_recognition import ScreenColorRecognition
+from core.voice_recognition import VoiceRecognition
 import utils.generic_utils as generic_utils
 import json
 import datetime as dt
@@ -21,10 +22,12 @@ def generate_cut_video(config, files, email_config, dir_to_save, combined_videos
     send_email(email_config, f"{final_video_name} update process status", about_to_process_message)
     times_of_each_cut = []
     if not use_debug_file:
-        if recognition_type == "screen_color":
-            recognition_processor = ScreenColorRecognition(files, config)
+        if recognition_type == "voice_recognition":
+            recognition_processor = VoiceRecognition(files, config, combined_videos)
         elif recognition_type == "gesture_recognition":
             recognition_processor = GestureRecognition(files, config)
+        else: 
+            recognition_processor = ScreenColorRecognition(files, config)
             
         times_of_each_cut = recognition_processor.process()
         save_debug_file(times_of_each_cut, final_video_name)

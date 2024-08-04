@@ -32,7 +32,7 @@ class ScreenColorRecognition(RecognitionProcessor):
                     if idx > 0 :
                         seconds += sum(self.videos_duration)
                     print(f"Black screen detected in {seconds:.2f} seconds")
-                    self.add_time_cut(seconds_considered_same_gesture, seconds)
+                    self.add_time_cut(seconds, seconds_considered_same_gesture)
 
                 
             self.videos_duration.append(current_video_duration)
