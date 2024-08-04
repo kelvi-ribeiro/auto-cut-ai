@@ -30,7 +30,7 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, final_video_
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
 
         num_threads = max(1, multiprocessing.cpu_count() - 1)
-        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", num_threads)
+        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=num_threads, preset='ultrafast')
     return (total_cuts, sum(i['end'] - i['start'] for i in times_of_each_cut))
 
 def merge_videos(videos_paths):

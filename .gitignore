@@ -199,4 +199,5 @@ cython_debug/
 temp/
 export/
 debug/
+result/
 config_secret.json
