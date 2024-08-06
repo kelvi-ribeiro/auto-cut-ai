@@ -18,19 +18,19 @@ def cut_video(video, cuts):
         cut_segments.append(segment)
     return (cut_segments, sum(i['cuts_count'] for i in cuts))
 
-def generate_video(combined_videos, times_of_each_cut, dir_to_save, final_video_name, masks_config):
+def generate_video(combined_videos, times_of_each_cut, dir_to_save, config):
     cut_segments = []
     cut_segments, total_cuts = cut_video(combined_videos, times_of_each_cut)
     if not cut_segments:
         print("No cuts found")
     else:
-        print(f"'{total_cuts}' cuts were found in the video '{final_video_name}'")
+        print(f"'{total_cuts}' cuts were found in the video '{config['final_video_name']}'")
         concatenated_videoclips = concatenate_videoclips(cut_segments) 
-        if masks_config['flip'] is True:
+        if config['flip'] is True:
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
 
         num_threads = max(1, multiprocessing.cpu_count() - 1)
-        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{final_video_name}.mp4", threads=num_threads, preset='ultrafast')
+        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{config['final_video_name']}.mp4", threads=num_threads, preset='ultrafast')
     return (total_cuts, sum(i['end'] - i['start'] for i in times_of_each_cut))
 
 def merge_videos(videos_paths):
