@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QComboBox,
 from core.VideoProcessingThread import VideoProcessingThread
 import core.manager_api as manager
 
-class RecognitionConfigForm(QWidget):
+class VideoEditionConfigForm(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
