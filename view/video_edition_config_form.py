@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QComboBox, 
                              QPushButton, QCheckBox, QVBoxLayout, QFormLayout, 
                              QFileDialog, QDoubleSpinBox, QSpinBox, QMessageBox)
+from PyQt5.QtGui import QIcon
 from core.VideoProcessingThread import VideoProcessingThread
 import core.manager_api as manager
 
@@ -10,13 +11,39 @@ class VideoEditionConfigForm(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Configuração da edição')
-        self.setGeometry(100, 100, 400, 500)
+        self.setWindowTitle('Configuração da Edição')
+        self.setGeometry(100, 100, 400, 600)
 
-        # Layouts
         layout = QVBoxLayout()
         self.form_layout = QFormLayout()
+        self.form_layout.setSpacing(15)
 
+        self.configure_widgets()
+
+        self.form_layout.addRow('Tipo de Reconhecimento:', self.recognition_type)
+        self.form_layout.addRow('Selecione o Diretório dos Vídeos:', self.videos_path_dir)
+        self.form_layout.addRow('', self.browse_button)
+        self.form_layout.addRow('Segundos de Corte:', self.seconds_to_cut)
+        self.form_layout.addRow('Utilizar Processamento Prévio:', self.use_saved_result_file)
+        self.form_layout.addRow('Inverter Vídeo:', self.flip)
+        self.form_layout.addRow('Nome do Vídeo Exportado:', self.final_video_name)
+        self.form_layout.addRow('Notificação por E-mail:', self.use_email_notification)
+        self.form_layout.addRow(self.from_email_label, self.from_email)
+        self.form_layout.addRow(self.from_email_password_label, self.from_email_password)
+        self.form_layout.addRow(self.recipient_email_label, self.recipient_email)
+        self.form_layout.addRow(self.keyword_label, self.keyword)
+        self.form_layout.addRow(self.minimum_confidence_label, self.minimum_confidence)
+        self.form_layout.addRow(self.whisper_language_label, self.whisper_language)
+        self.form_layout.addRow(self.whisper_model_label, self.whisper_model)
+        self.form_layout.addRow('', self.submit_button)
+
+        layout.addLayout(self.form_layout)
+        layout.setContentsMargins(20, 20, 20, 20)
+        self.setLayout(layout)
+
+        self.update_fields()
+
+    def configure_widgets(self):
         self.recognition_type = QComboBox()
         recognition_items = [('Reconhecimento por cor da tela', 'screen_colorn'), 
                              ('Reconhecimento por gesto', 'gesture_recognition'), 
@@ -60,10 +87,8 @@ class VideoEditionConfigForm(QWidget):
 
         self.final_video_name = QLineEdit()
 
-
         self.use_email_notification = QCheckBox()
         self.use_email_notification.stateChanged.connect(self.update_fields)
-
 
         self.from_email = QLineEdit()
         self.from_email_label = QLabel("Email do Remetente:")
@@ -72,32 +97,38 @@ class VideoEditionConfigForm(QWidget):
         self.from_email_password_label = QLabel("Senha email do Remetente:")
 
         self.recipient_email = QLineEdit()
-        self.recipient_email_label = QLabel("Email destinário:")
+        self.recipient_email_label = QLabel("Email destinatário:")
 
         self.submit_button = QPushButton('Processar')
+        self.submit_button.setIcon(QIcon('path/to/icon.png'))
         self.submit_button.clicked.connect(self.on_submit)
 
-        self.form_layout.addRow('Tipo de reconhecimento:', self.recognition_type)
-        self.form_layout.addRow('Selecione o diretório dos vídeos:', self.videos_path_dir)
-        self.form_layout.addRow('', self.browse_button)
-        self.form_layout.addRow('Segundos de corte:', self.seconds_to_cut)
-        self.form_layout.addRow('Utilizar processamento prévio:', self.use_saved_result_file)
-        self.form_layout.addRow('Inverter vídeo:', self.flip)
-        self.form_layout.addRow('Nome do vídeo exportado:', self.final_video_name)
-        self.form_layout.addRow(self.keyword_label, self.keyword)
-        self.form_layout.addRow(self.minimum_confidence_label, self.minimum_confidence)
-        self.form_layout.addRow(self.whisper_language_label, self.whisper_language)
-        self.form_layout.addRow(self.whisper_model_label, self.whisper_model)
-        self.form_layout.addRow('Notificação por e-mail:', self.use_email_notification)
-        self.form_layout.addRow(self.from_email_label, self.from_email)
-        self.form_layout.addRow(self.from_email_password_label, self.from_email_password)
-        self.form_layout.addRow(self.recipient_email_label, self.recipient_email)
-        self.form_layout.addRow('', self.submit_button)
-
-        layout.addLayout(self.form_layout)
-        self.setLayout(layout)
-
-        self.update_fields()
+        self.setStyleSheet("""
+            QWidget {
+                font-family: Arial, sans-serif;
+            }
+            QLabel {
+                font-size: 12px;
+                padding: 5px;
+            }
+            QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
+                padding: 5px;
+                font-size: 12px;
+            }
+            QPushButton {
+                background-color: #28a745;
+                color: white;
+                border-radius: 5px;
+                padding: 10px;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background-color: #218838;
+            }
+            QCheckBox {
+                font-size: 12px;
+            }
+        """)
 
     def browse_directory(self):
         directory = QFileDialog.getExistingDirectory(self, "Selecione a pasta")
@@ -145,11 +176,12 @@ class VideoEditionConfigForm(QWidget):
             if not self.from_email.text():
                 errors.append('Email remetente é obrigatório para a notificação por email.')
             if not self.from_email_password.text():
-                errors.append('Senha do email remetente é obrigatório para a notificação por email.')
+                errors.append('Senha do email remetente é obrigatória para a notificação por email.')
             if not self.recipient_email.text():
                 errors.append('Email destinatário é obrigatório para a notificação por email.')
+
         if errors:
-            QMessageBox.critical(self, 'Erros:', '\n'.join(errors))
+            QMessageBox.critical(self, 'Erros:', '\n'.join(errors), QMessageBox.Ok, QMessageBox.Ok)
         else:
             config = {
                 "recognition_type": self.recognition_type.currentData(),
@@ -168,13 +200,11 @@ class VideoEditionConfigForm(QWidget):
                 "recipient_email": self.recipient_email.text(), 
             }
 
-            QMessageBox.information(self, 'Edição configurada!', 'O seu vídeo já está sendo processado...')
+            QMessageBox.information(self, 'Edição Configurada!', 'O seu vídeo já está sendo processado...', QMessageBox.Ok, QMessageBox.Ok)
             self.processing_thread = VideoProcessingThread(config, manager)
             self.processing_thread.finished.connect(self.on_processing_finished)
             self.processing_thread.start()
 
     def on_processing_finished(self):
-        QMessageBox.information(self, 'Processamento Concluído', 'O vídeo foi processado com sucesso!')
+        QMessageBox.information(self, 'Processamento Concluído', 'O vídeo foi processado com sucesso!', QMessageBox.Ok, QMessageBox.Ok)
         self.close()
-
-            
