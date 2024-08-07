@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QComboBox, 
                              QPushButton, QCheckBox, QVBoxLayout, QFormLayout, 
                              QFileDialog, QDoubleSpinBox, QSpinBox, QMessageBox)
-from PyQt5.QtGui import QIcon
 from core.VideoProcessingThread import VideoProcessingThread
 import core.manager_api as manager
+from view.component_generation import generate_icon
 
 class VideoEditionConfigForm(QWidget):
     def __init__(self):
@@ -13,6 +13,8 @@ class VideoEditionConfigForm(QWidget):
     def initUI(self):
         self.setWindowTitle('Configuração da Edição')
         self.setGeometry(100, 100, 400, 600)
+
+        self.setWindowIcon(generate_icon('https://img.icons8.com/?size=100&id=UWtgn2Fl5iGg&format=png&color=000000'))
 
         layout = QVBoxLayout()
         self.form_layout = QFormLayout()
@@ -42,7 +44,7 @@ class VideoEditionConfigForm(QWidget):
         self.setLayout(layout)
 
         self.update_fields()
-
+    
     def configure_widgets(self):
         self.recognition_type = QComboBox()
         recognition_items = [('Reconhecimento por cor da tela', 'screen_colorn'), 
@@ -54,6 +56,7 @@ class VideoEditionConfigForm(QWidget):
 
         self.videos_path_dir = QLineEdit()
         self.browse_button = QPushButton('Procurar...')
+        self.browse_button.setIcon(generate_icon('https://img.icons8.com/?size=1000&id=Cw4a9E3dA73N&format=png&color=000000'))
         self.browse_button.clicked.connect(self.browse_directory)
 
         self.seconds_to_cut = QSpinBox()
@@ -100,7 +103,6 @@ class VideoEditionConfigForm(QWidget):
         self.recipient_email_label = QLabel("Email destinatário:")
 
         self.submit_button = QPushButton('Processar')
-        self.submit_button.setIcon(QIcon('path/to/icon.png'))
         self.submit_button.clicked.connect(self.on_submit)
 
         self.setStyleSheet("""
