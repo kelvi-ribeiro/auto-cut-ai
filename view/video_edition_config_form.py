@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QComboBox,
                              QFileDialog, QDoubleSpinBox, QSpinBox, QMessageBox)
 from core.VideoProcessingThread import VideoProcessingThread
 import core.manager_api as manager
+from view.loading_screen import LoadingScreen
 from view.component_generation import generate_icon
 
 class VideoEditionConfigForm(QWidget):
@@ -202,11 +203,16 @@ class VideoEditionConfigForm(QWidget):
                 "recipient_email": self.recipient_email.text(), 
             }
 
-            QMessageBox.information(self, 'Edição Configurada!', 'O seu vídeo já está sendo processado...', QMessageBox.Ok, QMessageBox.Ok)
+            # TODO remover QMessageBox.information(self, 'Edição Configurada!', 'O seu vídeo já está sendo processado...', QMessageBox.Ok, QMessageBox.Ok)
+            self.close()
             self.processing_thread = VideoProcessingThread(config, manager)
+            self.loading_screen = LoadingScreen()
+            self.loading_screen.show()
+            self.repaint()  # Ensure the loading screen is visible immediately
             self.processing_thread.finished.connect(self.on_processing_finished)
             self.processing_thread.start()
 
     def on_processing_finished(self):
+        self.loading_screen.close()
         QMessageBox.information(self, 'Processamento Concluído', 'O vídeo foi processado com sucesso!', QMessageBox.Ok, QMessageBox.Ok)
         self.close()
