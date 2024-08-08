@@ -1,6 +1,5 @@
 
 import sys
-import core.manager_api as manager
 from PyQt5.QtWidgets import QApplication
 from view.video_edition_config_form import VideoEditionConfigForm
 

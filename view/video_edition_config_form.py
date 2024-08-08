@@ -33,6 +33,7 @@ class VideoEditionConfigForm(QWidget):
         self.form_layout.addRow('Utilizar Processamento Prévio:', self.use_saved_result_file)
         self.form_layout.addRow('Inverter Vídeo:', self.flip)
         self.form_layout.addRow('Nome do Vídeo Exportado:', self.final_video_name)
+        self.form_layout.addRow('Abrir vídeo após o processamento:', self.open_video_after_processing)
         self.form_layout.addRow('Notificação por E-mail:', self.use_email_notification)
         self.form_layout.addRow(self.from_email_label, self.from_email)
         self.form_layout.addRow(self.from_email_password_label, self.from_email_password)
@@ -93,6 +94,9 @@ class VideoEditionConfigForm(QWidget):
         self.use_saved_result_file = QCheckBox()
 
         self.final_video_name = QLineEdit()
+
+        self.open_video_after_processing = QCheckBox()
+        self.open_video_after_processing.setChecked(True)
 
         self.use_email_notification = QCheckBox()
         self.use_email_notification.stateChanged.connect(self.update_fields)
@@ -200,13 +204,13 @@ class VideoEditionConfigForm(QWidget):
                 "flip": self.flip.isChecked(),
                 "use_saved_result_file": self.use_saved_result_file.isChecked(),
                 "final_video_name": self.final_video_name.text(),
+                "open_video_after_processing":self.open_video_after_processing.isChecked(),
                 "use_email_notification": self.use_email_notification.isChecked(), 
                 "from_email": self.from_email.text(), 
                 "from_email_password": self.from_email_password.text(), 
                 "recipient_email": self.recipient_email.text(), 
             }
             self.config = config
-            #self.hide()
             self.processing_thread = VideoProcessingThread(config, manager)
             self.loading_screen = LoadingScreen()
             self.loading_screen.show()
@@ -215,8 +219,18 @@ class VideoEditionConfigForm(QWidget):
             self.processing_thread.start()
 
     def on_processing_finished(self):
+        open_video_after_processing = self.config["open_video_after_processing"]
         final_video_path = f"{EXPORT_PATH}{os.sep}{self.config['final_video_name']}.mp4"
-        open_video(final_video_path)
+        ending_process_message = 'Vídeo processado com sucesso.'
+        if open_video_after_processing:
+            open_video(final_video_path)
+            ending_process_message = 'O vídeo processado será aberto em alguns instantes...'
+            
         self.loading_screen.close()
-        QMessageBox.information(self, 'Processamento Concluído', 'O vídeo processado será aberto em alguns instantes...', QMessageBox.Ok, QMessageBox.Ok)
+        QMessageBox.information(
+            self, 
+            'Processamento Concluído', 
+            ending_process_message, 
+            QMessageBox.Ok, 
+            QMessageBox.Ok)
         self.close()
