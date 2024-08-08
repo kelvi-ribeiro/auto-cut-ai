@@ -1,5 +1,3 @@
-from core.notification.notification_client import NotificationClient
-
 class NotificationSystem:
     _instance = None
 
