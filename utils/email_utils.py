@@ -1,6 +1,9 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from core.notification.notification_system import NotificationSystem
+
+notification_system = NotificationSystem()
 
 def send_email(config, subject, msgBody):    
     use_email_notification = config["use_email_notification"]
@@ -24,4 +27,4 @@ def send_email(config, subject, msgBody):
         server.sendmail(from_email, recipient_email, message.as_string())
         server.quit()
     except Exception as e:
-        print(f"Error sending email: {e}")
+        notification_system.notify(f"Error sending email: {e}")

@@ -6,21 +6,21 @@ import utils.audio_manipulation_utils as audio_mp
 import utils.string_utils as string_utils
 
 class VoiceRecognition(RecognitionProcessor):
-    def __init__(self, files, config, combined_videos):
-        super().__init__(files, config, combined_videos)
+    def __init__(self, files, config, notification_system, combined_videos):
+        super().__init__(files, config, notification_system, combined_videos)
 
     def process(self):
         final_video_name = self.config['final_video_name']
         whisper_language = self.config['whisper_language']
         whisper_model = self.config['whisper_model']
 
-        print(f"Initiating whisper process at {get_datetime_without_milliseconds(datetime.datetime.now())} for the video '{final_video_name}'")
+        self.notification_system.notify(f"Initiating whisper process at {get_datetime_without_milliseconds(datetime.datetime.now())} for the video '{final_video_name}'")
 
         audio_enhanced_path = audio_mp.generate_enhenced_audio(self.combined_videos, final_video_name)
 
         model = WhisperModel(whisper_model, device="cpu", compute_type="int8")
 
-        print("Extracting segments using Fast Whisper")
+        self.notification_system.notify("Extracting segments using Fast Whisper")
         segments, _ = model.transcribe(audio_enhanced_path, language=whisper_language, beam_size=5, best_of=5, word_timestamps=True)
         times_of_each_keyword_spoken = []
 
@@ -44,7 +44,7 @@ class VoiceRecognition(RecognitionProcessor):
         keyword = self.config['keyword']
         minimum_confidence = self.config['minimum_confidence']
         filtered_results = []
-        print(f"About to map the '{self.config['keyword']}' in result" )
+        self.notification_system.notify(f"About to map the '{self.config['keyword']}' in result" )
         for word in times_of_each_keyword_spoken: 
             if string_utils.remove_special_chars_and_accents(keyword) in string_utils.remove_special_chars_and_accents(word['text']) and word['confidence'] > minimum_confidence:
                 filtered_results.append(word)

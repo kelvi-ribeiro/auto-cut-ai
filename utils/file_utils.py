@@ -3,8 +3,11 @@ import os
 import io, json
 import subprocess
 import sys
+from core.notification.notification_system import NotificationSystem
 from utils.constants import SAVED_RESULT_PATH
 import os
+
+notification_system = NotificationSystem()
 
 def get_pathname_without_extension(full_path):
     pathname, _ = os.path.splitext(full_path)
@@ -17,7 +20,7 @@ def get_filename_from_full_path(full_path):
     return os.path.basename(full_path)
 
 def save_result_file(times_of_each_cut, final_video_name): 
-     print("about to save the result_file")
+     notification_system.notify("about to save the result_file")
      json_data = json.dumps(times_of_each_cut, indent=4, ensure_ascii=False)
      with io.open(get_result_file_name(final_video_name), 'w', encoding='utf-8') as f:
         f.write(json_data)
@@ -39,6 +42,6 @@ def open_video(file_path):
         elif sys.platform == 'linux':  
             subprocess.Popen(['xdg-open', file_path])
         else:
-            print("Unsupported platform")
+            notification_system("Unsupported platform")
     except Exception as e:
-        print(f"Error opening file: {e}")
+        notification_system(f"Error opening file: {e}")

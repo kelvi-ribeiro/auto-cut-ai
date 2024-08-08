@@ -1,18 +1,20 @@
+from core.notification.notification_system import NotificationSystem
 from utils.file_utils import get_filename_from_full_path
 
 class RecognitionProcessor:
-    def __init__(self, files, config, combined_videos = []):
+    def __init__(self, files, config, notification_system, combined_videos = []):
         self.files = files
         self.videos_duration = []
         self.times_of_each_cut = []
         self.config = config
         self.combined_videos = combined_videos
+        self.notification_system = notification_system
 
     def process(self):
         raise NotImplementedError("Subclasses should implement this method.")
     
     def print_process_status(self, idx, file):
-        print(f"Processing '{idx + 1}/{len(self.files)}'. Video: '{get_filename_from_full_path(file)}'.")
+        self.notification_system.notify(f"Processing '{idx + 1}/{len(self.files)}'. Video: '{get_filename_from_full_path(file)}'.")
 
     def add_time_cut(self, seconds, seconds_considered_same_gesture = 0):
         last_index = len(self.times_of_each_cut) - 1

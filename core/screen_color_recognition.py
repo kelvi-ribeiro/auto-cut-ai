@@ -2,8 +2,8 @@ import cv2
 from core.recognition_processor import RecognitionProcessor
 
 class ScreenColorRecognition(RecognitionProcessor):
-    def __init__(self, files, config):
-        super().__init__(files, config)
+    def __init__(self, files, config, notification_system):
+        super().__init__(files, config, notification_system)
 
     def process(self):
         threshold=10
@@ -31,7 +31,7 @@ class ScreenColorRecognition(RecognitionProcessor):
                     seconds = (frame_position / fps) 
                     if idx > 0 :
                         seconds += sum(self.videos_duration)
-                    print(f"Black screen detected in {seconds:.2f} seconds")
+                    self.notification_system.notify(f"Black screen detected in {seconds:.2f} seconds")
                     self.add_time_cut(seconds, seconds_considered_same_gesture)
 
                 

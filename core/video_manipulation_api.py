@@ -2,7 +2,10 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import *
 import multiprocessing
 import os
+from core.notification.notification_system import NotificationSystem
 from utils.constants import MIN_VIDEO_SECONDS
+
+notification_system = NotificationSystem()
 
 def cut_video(video, cuts):
     cut_segments = []
@@ -22,9 +25,9 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, config):
     cut_segments = []
     cut_segments, total_cuts = cut_video(combined_videos, times_of_each_cut)
     if not cut_segments:
-        print("No cuts found")
+        notification_system.notify("No cuts found")
     else:
-        print(f"'{total_cuts}' cuts were found in the video '{config['final_video_name']}'")
+        notification_system.notify(f"'{total_cuts}' cuts were found in the video '{config['final_video_name']}'")
         concatenated_videoclips = concatenate_videoclips(cut_segments) 
         if config['flip'] is True:
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
@@ -41,13 +44,13 @@ def merge_videos(videos_paths):
             if video.duration >= MIN_VIDEO_SECONDS:
                 videos.append(VideoFileClip(video_path)) 
             else:
-                print(f"Ignoring the video '{video_path}' with '{video.duration}' seconds because it is less than '{MIN_VIDEO_SECONDS}', the minimum allowed seconds")
+                notification_system.notify(f"Ignoring the video '{video_path}' with '{video.duration}' seconds because it is less than '{MIN_VIDEO_SECONDS}', the minimum allowed seconds")
         except Exception as e:
-            print(f"Error loading video: {e}")
+            notification_system.notify(f"Error loading video: {e}")
             return None  
     ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
     ## video.close
-    print(f"About to merge '{len(videos)}' videos")
+    notification_system.notify(f"About to merge '{len(videos)}' videos")
     if(len(videos) == 1):  
         return videos[0]
 

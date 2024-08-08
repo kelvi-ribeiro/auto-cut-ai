@@ -5,8 +5,8 @@ from core.gesture_recognition.hands_gestures import is_peace_sign
 from core.recognition_processor import RecognitionProcessor
 
 class GestureRecognition(RecognitionProcessor):
-    def __init__(self, files, config):
-        super().__init__(files, config)
+    def __init__(self, files, config, notification_system):
+        super().__init__(files, config, notification_system)
 
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(static_image_mode=False,
@@ -43,7 +43,7 @@ class GestureRecognition(RecognitionProcessor):
                             if idx > 0:
                                 seconds += sum(self.videos_duration)
 
-                            print(f"Gesture detected at second: '{seconds:.2f}'")
+                            self.notification_system.notify(f"Gesture detected at second: '{seconds:.2f}'")
                             self.add_time_cut(seconds, seconds_considered_same_gesture)
                             break
             self.videos_duration.append(current_video_duration)
