@@ -1,5 +1,8 @@
+import time
 import os
 import io, json
+import subprocess
+import sys
 from utils.constants import SAVED_RESULT_PATH
 import os
 
@@ -25,3 +28,17 @@ def get_result_file(final_video_name):
 
 def get_result_file_name(final_video_name):
     return f'{SAVED_RESULT_PATH}{os.sep}{final_video_name}_result.json'
+
+def open_video(file_path):   
+    time.sleep(1) 
+    try:
+        if sys.platform == 'win32':
+            subprocess.Popen(['start', file_path], shell=True)
+        elif sys.platform == 'darwin':  # macOS
+            subprocess.Popen(['open', file_path])
+        elif sys.platform == 'linux':  
+            subprocess.Popen(['xdg-open', file_path])
+        else:
+            print("Unsupported platform")
+    except Exception as e:
+        print(f"Error opening file: {e}")
