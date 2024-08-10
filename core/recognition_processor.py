@@ -1,4 +1,3 @@
-from core.notification.notification_system import NotificationSystem
 from utils.file_utils import get_filename_from_full_path
 
 class RecognitionProcessor:
@@ -42,3 +41,13 @@ class RecognitionProcessor:
                 times_of_each_cut['cuts_count'] = 1
                 unique_list.append(times_of_each_cut)
         return unique_list
+    
+    def update_progress_bar(self, message, idx):
+        progress_min = 30
+        progress_max = 60
+        progress = 60
+
+        if(len(self.files) > 1):
+            progress = progress_min + (idx / (len(self.files) - 1)) * (progress_max - progress_min)
+            
+        self.notification_system.notify_progress_bar(f"{message}. Vídeo {idx + 1}/{len(self.files)}", int(progress))

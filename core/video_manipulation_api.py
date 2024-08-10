@@ -4,8 +4,24 @@ import multiprocessing
 import os
 from core.notification.notification_system import NotificationSystem
 from utils.constants import MIN_VIDEO_SECONDS
+from proglog import ProgressBarLogger
 
 notification_system = NotificationSystem()
+progress_bar_indicator = 't'
+
+class CustomizedProgressBarLogger(ProgressBarLogger):
+   
+    def bars_callback(self, bar, attr, value, old_value=None):
+        percentage = (value / self.bars[bar]['total']) * 100
+
+        progress_min = 60
+        progress_max = 100
+        adjusted_percentage = progress_min + (percentage / 100) * (progress_max - progress_min)
+    
+        if bar == progress_bar_indicator: 
+            notification_system.notify_progress_bar(f"Gerando vídeo final", int(adjusted_percentage))
+
+logger = CustomizedProgressBarLogger()
 
 def cut_video(video, cuts):
     cut_segments = []
@@ -31,9 +47,9 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, config):
         concatenated_videoclips = concatenate_videoclips(cut_segments) 
         if config['flip'] is True:
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
-
+        logger = CustomizedProgressBarLogger()
         num_threads = max(1, multiprocessing.cpu_count() - 1)
-        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{config['final_video_name']}.mp4", threads=num_threads, preset='ultrafast')
+        concatenated_videoclips.write_videofile(f"{dir_to_save}{os.sep}{config['final_video_name']}.mp4", threads=num_threads, preset='ultrafast', logger=logger)
     return (total_cuts, sum(i['end'] - i['start'] for i in times_of_each_cut))
 
 def merge_videos(videos_paths):
@@ -50,8 +66,8 @@ def merge_videos(videos_paths):
             return None  
     ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
     ## video.close
-    notification_system.notify(f"About to merge '{len(videos)}' videos")
     if(len(videos) == 1):  
         return videos[0]
 
+    notification_system.notify(f"About to merge '{len(videos)}' videos")
     return concatenate_videoclips(videos) 

@@ -1,7 +1,11 @@
-class NotificationSystem:
+from PyQt5.QtCore import pyqtSignal, QObject
+
+class NotificationSystem(QObject):
+    progress_signal = pyqtSignal(str, int)
     _instance = None
 
     def __init__(self):
+        super().__init__()
         self.clients = []
 
     def __new__(cls, *args, **kwargs):
@@ -15,5 +19,6 @@ class NotificationSystem:
     def notify(self, message):
         for client in self.clients:
             client.action(message)
-        
-    
+
+    def notify_progress_bar(self, phase, percentage):
+        self.progress_signal.emit(phase, percentage)  

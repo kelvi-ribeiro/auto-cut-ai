@@ -9,6 +9,7 @@ class ScreenColorRecognition(RecognitionProcessor):
         threshold=10
         for idx, file in enumerate(self.files):
             self.print_process_status(idx, file)
+            self.update_progress_bar("Buscando por padrão de cores", idx) 
             cap = cv2.VideoCapture(file)
             fps = cap.get(cv2.CAP_PROP_FPS)
             seconds_considered_same_gesture = 4

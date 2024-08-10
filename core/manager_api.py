@@ -43,28 +43,13 @@ def generate_final_video(config):
     start_time = dt.datetime.now()
     
     notification_system.notify(f"Initiating main process at {get_datetime_without_milliseconds(start_time)}...")
+    notification_system.notify_progress_bar(f"Iniciando processamento do vídeo {config['final_video_name']}", 5)
     try:
-        notification_system.notify("About to merge all videos to not have problems with cuts between the videos")
         files = [os.path.join(config['videos_path_dir'], file) for file in os.listdir(config['videos_path_dir']) if os.path.isfile(os.path.join(config['videos_path_dir'], file))]
-        combined_videos = video_manipulation.merge_videos(files)
-        (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, files, EXPORT_PATH, combined_videos)
-        end_time = dt.datetime.now()
-        processing_time = (end_time - start_time).total_seconds() / 60
-        finalLogMessage = f"Finishing main process at {get_datetime_without_milliseconds(end_time)}.\n Processing time: '{processing_time:.2f}' minutes\n'{len(files)}' videos processed and '{totalCutsFound}' total cuts found and '{get_pretty_minutes(sum_seconds_total_video / 60)}' minutes of video."
-        notification_system.notify(finalLogMessage)
-        send_email(config, f"{config['final_video_name']} processed", finalLogMessage)
-    except Exception as e:
-        send_email(config, f"{config['final_video_name']} not processed", f"Error trying to process {config['final_video_name']}, with exception message {str(e)}")
-        raise e
-    
-def generate_final_video(config):
-    totalCutsFound = 0
-    generic_utils.create_functional_dir()
-    start_time = dt.datetime.now()    
-    notification_system.notify(f"Initiating main process at {get_datetime_without_milliseconds(start_time)}...")
-    try:
-        notification_system.notify("About to merge all videos to not have problems with cuts between the videos")
-        files = [os.path.join(config['videos_path_dir'], file) for file in os.listdir(config['videos_path_dir']) if os.path.isfile(os.path.join(config['videos_path_dir'], file))]
+        if len(files) > 1:
+            notification_system.notify("About to merge all videos to not have problems with cuts between the videos")
+            notification_system.notify_progress_bar(f"Mesclando os {len(files)} vídeos", 10)
+
         combined_videos = video_manipulation.merge_videos(files)
         (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, files, EXPORT_PATH, combined_videos)
         end_time = dt.datetime.now()
