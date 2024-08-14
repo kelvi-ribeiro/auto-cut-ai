@@ -1,6 +1,5 @@
 import time
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton, QProgressBar, QLabel
-from core.notification.notification_client import NotificationClient
 from core.notification.notification_system import NotificationSystem
 from view.component_generation import generate_icon
 from PyQt5.QtCore import Qt
@@ -35,8 +34,8 @@ class LoadingScreen(QDialog):
         layout.addWidget(self.details_button)
 
         self.setLayout(layout)
-        notification_system.add_client(NotificationClient(self.add_message)) ## TODO VAMOS MELHORAR ISSO UTILIZANDO O EMIT(SINAIS) TAMBÉM NESSE TIPO DE NOTIFICAÇÃO PORQUE AINDA CAUSA ERROS
         notification_system.progress_signal.connect(self.update_progress_bar)
+        notification_system.notification_message_signal.connect(self.add_message)
 
     def toggle_details(self):
         if self.message_area.isVisible():
@@ -47,8 +46,7 @@ class LoadingScreen(QDialog):
             self.details_button.setText("Ocultar Detalhes")
 
     def add_message(self, message):
-        return
-        #TODO ISSO ESTÁ CAUSANDO BUGS. DEVE SER COLOCADO COM O MÉOTODO EMIT self.message_area.append(message)
+        self.message_area.append(message)
 
     def update_progress_bar(self, phase, percentage):
         self.progress_bar.setValue(percentage)

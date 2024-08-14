@@ -53,8 +53,10 @@ def generate_final_video(config):
         combined_videos = video_manipulation.merge_videos(files)
         (totalCutsFound, sum_seconds_total_video) = generate_cut_video(config, files, EXPORT_PATH, combined_videos)
         end_time = dt.datetime.now()
-        processing_time = (end_time - start_time).total_seconds() / 60
-        finalLogMessage = f"Finishing main process at {get_datetime_without_milliseconds(end_time)}.\n Processing time: '{processing_time:.2f}' minutes\n'{len(files)}' videos processed and '{totalCutsFound}' total cuts found and '{get_pretty_minutes(sum_seconds_total_video / 60)}' minutes of video."
+        processing_time = end_time - start_time
+        minutes_difference = processing_time.seconds // 60
+        seconds_difference = processing_time.seconds % 60
+        finalLogMessage = f"Finishing main process at {get_datetime_without_milliseconds(end_time)}.\n Processing time: {minutes_difference} minutos e {seconds_difference} segundos\n'{len(files)}' videos processed and '{totalCutsFound}' total cuts found."
         notification_system.notify(finalLogMessage)
         send_email(config, f"{config['final_video_name']} processed", finalLogMessage)
     except Exception as e:
