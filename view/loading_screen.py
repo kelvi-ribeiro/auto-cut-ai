@@ -14,7 +14,7 @@ class LoadingScreen(QDialog):
         self.setWindowIcon(generate_icon('https://img.icons8.com/?size=100&id=5dPeBRbvJRr1&format=png&color=000000'))
         self.setFixedSize(400, 300)  
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
-       
+        self.user_closing = True
 
         self.message_area = QTextEdit()
         self.message_area.setReadOnly(True)
@@ -56,10 +56,15 @@ class LoadingScreen(QDialog):
         self.bold_label.setText('<b>' + phase + '</b>')
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Confirmar', 'Isso vai encerrer o processamento do vídeo. Tem certeza de que deseja fechar?',
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            event.accept()  
-            sys.exit(0)
-        else:
-            event.ignore()  
+        if self.user_closing:
+            reply = QMessageBox.question(self, 'Confirmar', 'Isso vai encerrer o processamento do vídeo. Tem certeza de que deseja fechar?',
+                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                event.accept()  
+                sys.exit(0)
+            else:
+                event.ignore()  
+    
+    def close(self):
+        self.user_closing = False
+        super().close()  

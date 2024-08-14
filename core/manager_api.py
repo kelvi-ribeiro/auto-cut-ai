@@ -41,7 +41,7 @@ def generate_final_video(config):
     totalCutsFound = 0
     generic_utils.create_functional_dir()
     start_time = dt.datetime.now()
-    notification_system.notify_progress_bar(f"Iniciando processamento do vídeo {config['final_video_name']} em {get_datetime_without_milliseconds(start_time)}...", 5)
+    notification_system.notify_progress_bar(f"Iniciando em {get_datetime_without_milliseconds(start_time)}", 5)
     try:
         files = [os.path.join(config['videos_path_dir'], file) for file in os.listdir(config['videos_path_dir']) if os.path.isfile(os.path.join(config['videos_path_dir'], file))]
         if len(files) > 1:

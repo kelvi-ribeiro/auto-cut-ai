@@ -14,6 +14,7 @@ class VideoEditionConfigForm(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        self.user_closing = True
 
     def initUI(self):
         self.setWindowTitle('Configuração da Edição')
@@ -212,6 +213,7 @@ class VideoEditionConfigForm(QWidget):
                 "recipient_email": self.recipient_email.text(), 
             }
             self.config = config
+            self.setVisible(False)
             self.processing_thread = VideoProcessingThread(config, manager)
             self.loading_screen = LoadingScreen()
             self.loading_screen.show()
@@ -220,6 +222,7 @@ class VideoEditionConfigForm(QWidget):
             self.processing_thread.start()
 
     def on_processing_finished(self):
+        self.setVisible(True)
         open_video_after_processing = self.config["open_video_after_processing"]
         final_video_path = f"{EXPORT_PATH}{os.sep}{self.config['final_video_name']}.mp4"
         ending_process_message = 'Vídeo processado com sucesso.'
@@ -234,13 +237,15 @@ class VideoEditionConfigForm(QWidget):
             ending_process_message, 
             QMessageBox.Ok, 
             QMessageBox.Ok)
+        self.user_closing = False
         self.close()
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Confirmar', 'Tem certeza de que deseja fechar?',
-                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            event.accept()  
-            sys.exit(0)
-        else:
-            event.ignore() 
+        if self.user_closing:
+            reply = QMessageBox.question(self, 'Confirmar', 'Tem certeza de que deseja fechar?',
+                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                event.accept()  
+                sys.exit(0)
+            else:
+                event.ignore() 
