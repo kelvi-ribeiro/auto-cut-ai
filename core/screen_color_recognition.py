@@ -32,7 +32,7 @@ class ScreenColorRecognition(RecognitionProcessor):
                     seconds = (frame_position / fps) 
                     if idx > 0 :
                         seconds += sum(self.videos_duration)
-                    self.notification_system.notify(f"Black screen detected in {seconds:.2f} seconds")
+                    self.notification_system.notify(f"Corte detectado em {seconds:.2f} segundos.")
                     self.add_time_cut(seconds, seconds_considered_same_gesture)
 
                 

@@ -44,7 +44,7 @@ class GestureRecognition(RecognitionProcessor):
                             if idx > 0:
                                 seconds += sum(self.videos_duration)
 
-                            self.notification_system.notify(f"Gesture detected at second: '{seconds:.2f}'")
+                            self.notification_system.notify(f"Corte detectado em {seconds:.2f} segundos.")
                             self.add_time_cut(seconds, seconds_considered_same_gesture)
                             break
             self.videos_duration.append(current_video_duration)

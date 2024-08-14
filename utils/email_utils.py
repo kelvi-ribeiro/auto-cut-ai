@@ -27,4 +27,4 @@ def send_email(config, subject, msgBody):
         server.sendmail(from_email, recipient_email, message.as_string())
         server.quit()
     except Exception as e:
-        notification_system.notify(f"Error sending email: {e}")
+        notification_system.notify(f"Erro no envio de e-mail: {e}")

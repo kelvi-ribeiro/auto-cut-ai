@@ -9,7 +9,7 @@ notification_system = NotificationSystem()
 class LoadingScreen(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Processando o vídeo...")
+        self.setWindowTitle("Processando vídeo...")
         self.setWindowIcon(generate_icon('https://img.icons8.com/?size=100&id=5dPeBRbvJRr1&format=png&color=000000'))
         self.setFixedSize(400, 300)  
 

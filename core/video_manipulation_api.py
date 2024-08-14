@@ -41,9 +41,9 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, config):
     cut_segments = []
     cut_segments, total_cuts = cut_video(combined_videos, times_of_each_cut)
     if not cut_segments:
-        notification_system.notify("No cuts found")
+        notification_system.notify("Nenhum corte encontrado")
     else:
-        notification_system.notify(f"'{total_cuts}' cuts were found in the video '{config['final_video_name']}'")
+        notification_system.notify(f"{total_cuts} cortes foram encontrados no vídeo {config['final_video_name']}")
         concatenated_videoclips = concatenate_videoclips(cut_segments) 
         if config['flip'] is True:
             concatenated_videoclips = concatenated_videoclips.add_mask().rotate(180)
@@ -60,14 +60,14 @@ def merge_videos(videos_paths):
             if video.duration >= MIN_VIDEO_SECONDS:
                 videos.append(VideoFileClip(video_path)) 
             else:
-                notification_system.notify(f"Ignoring the video '{video_path}' with '{video.duration}' seconds because it is less than '{MIN_VIDEO_SECONDS}', the minimum allowed seconds")
+                notification_system.notify(f"Ignorando o vídeo {video_path} com {video.duration} segundos por ter menos de {MIN_VIDEO_SECONDS} segundos, menor que o mínimo permitido")
         except Exception as e:
-            notification_system.notify(f"Error loading video: {e}")
+            notification_system.notify(f"Erro no carregamento do vídeo: {e}")
             return None  
     ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
     ## video.close
     if(len(videos) == 1):  
         return videos[0]
 
-    notification_system.notify(f"About to merge '{len(videos)}' videos")
+    notification_system.notify(f"Iniciando mesclagem de '{len(videos)}' vídeos")
     return concatenate_videoclips(videos) 

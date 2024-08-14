@@ -20,7 +20,6 @@ def get_filename_from_full_path(full_path):
     return os.path.basename(full_path)
 
 def save_result_file(times_of_each_cut, final_video_name): 
-     notification_system.notify("about to save the result_file")
      json_data = json.dumps(times_of_each_cut, indent=4, ensure_ascii=False)
      with io.open(get_result_file_name(final_video_name), 'w', encoding='utf-8') as f:
         f.write(json_data)

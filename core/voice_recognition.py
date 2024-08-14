@@ -15,13 +15,12 @@ class VoiceRecognition(RecognitionProcessor):
         whisper_model = self.config['whisper_model']
         keyword = self.config['keyword']
 
-        self.notification_system.notify(f"Initiating whisper process at {get_datetime_without_milliseconds(datetime.datetime.now())} for the video '{final_video_name}'")
+        self.notification_system.notify(f"Iniciando reconhecimento utilizando I.A Whisper em {get_datetime_without_milliseconds(datetime.datetime.now())} para o vídeo {final_video_name}")
         self.notification_system.notify_progress_bar(f"Extraindo e melhorando o aúdio.", 20)
         audio_enhanced_path = audio_mp.generate_enhenced_audio(self.combined_videos, final_video_name)
 
         model = WhisperModel(whisper_model, device="cpu", compute_type="int8")
-        self.notification_system.notify("Extracting segments using Fast Whisper")
-        self.notification_system.notify_progress_bar(f"Iniciando busca pela palavara {keyword} com uso de IA. Isso pode demorar bastante", 30)
+        self.notification_system.notify_progress_bar(f"Iniciando busca pela palavra {keyword} com uso de IA. Isso pode demorar bastante", 30)
         segments, _ = model.transcribe(audio_enhanced_path, language=whisper_language, beam_size=5, best_of=5, word_timestamps=True)
         times_of_each_keyword_spoken = []
 
@@ -43,7 +42,6 @@ class VoiceRecognition(RecognitionProcessor):
     def filter_according_with_keyword(self, times_of_each_keyword_spoken, keyword): 
         minimum_confidence = self.config['minimum_confidence']
         filtered_results = []
-        self.notification_system.notify(f"About to map the '{self.config['keyword']}' in result" )
         for word in times_of_each_keyword_spoken: 
             if string_utils.remove_special_chars_and_accents(keyword) in string_utils.remove_special_chars_and_accents(word['text']) and word['confidence'] > minimum_confidence:
                 filtered_results.append(word)

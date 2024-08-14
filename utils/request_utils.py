@@ -10,5 +10,5 @@ def get_content(url):
         response.raise_for_status() 
         return response.content
     except Exception as e:
-        notification_system.notify(f"An issue occurred while trying to access the URL '{url}'", e)
+        notification_system.notify(f"Um erro ocorreu ao tentar acessar a URL '{url}'", e)
         return ""

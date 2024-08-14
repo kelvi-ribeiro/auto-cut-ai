@@ -13,7 +13,7 @@ class RecognitionProcessor:
         raise NotImplementedError("Subclasses should implement this method.")
     
     def print_process_status(self, idx, file):
-        self.notification_system.notify(f"Processing '{idx + 1}/{len(self.files)}'. Video: '{get_filename_from_full_path(file)}'.")
+        self.notification_system.notify(f"Processando o vídeo {idx + 1}/{len(self.files)} - {get_filename_from_full_path(file)}.")
 
     def add_time_cut(self, seconds, seconds_considered_same_gesture = 0):
         last_index = len(self.times_of_each_cut) - 1
@@ -50,4 +50,4 @@ class RecognitionProcessor:
         if(len(self.files) > 1):
             progress = progress_min + (idx / (len(self.files) - 1)) * (progress_max - progress_min)
             
-        self.notification_system.notify_progress_bar(f"{message}. Vídeo {idx + 1}/{len(self.files)}", int(progress))
+        self.notification_system.notify_progress_bar(f"{message} - Vídeo {idx + 1}/{len(self.files)}", int(progress))
