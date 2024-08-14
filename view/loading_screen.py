@@ -1,5 +1,6 @@
+import sys
 import time
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton, QProgressBar, QLabel
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton, QProgressBar, QLabel, QMessageBox
 from core.notification.notification_system import NotificationSystem
 from view.component_generation import generate_icon
 from PyQt5.QtCore import Qt
@@ -12,6 +13,8 @@ class LoadingScreen(QDialog):
         self.setWindowTitle("Processando vídeo...")
         self.setWindowIcon(generate_icon('https://img.icons8.com/?size=100&id=5dPeBRbvJRr1&format=png&color=000000'))
         self.setFixedSize(400, 300)  
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+       
 
         self.message_area = QTextEdit()
         self.message_area.setReadOnly(True)
@@ -51,3 +54,12 @@ class LoadingScreen(QDialog):
     def update_progress_bar(self, phase, percentage):
         self.progress_bar.setValue(percentage)
         self.bold_label.setText('<b>' + phase + '</b>')
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Confirmar', 'Isso vai encerrer o processamento do vídeo. Tem certeza de que deseja fechar?',
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()  
+            sys.exit(0)
+        else:
+            event.ignore()  

@@ -1,3 +1,4 @@
+import sys
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QComboBox, 
                              QPushButton, QCheckBox, QVBoxLayout, QFormLayout, 
                              QFileDialog, QDoubleSpinBox, QSpinBox, QMessageBox)
@@ -234,3 +235,12 @@ class VideoEditionConfigForm(QWidget):
             QMessageBox.Ok, 
             QMessageBox.Ok)
         self.close()
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Confirmar', 'Tem certeza de que deseja fechar?',
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()  
+            sys.exit(0)
+        else:
+            event.ignore() 
