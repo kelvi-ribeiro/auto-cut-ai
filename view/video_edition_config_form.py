@@ -54,7 +54,7 @@ class VideoEditionConfigForm(QWidget):
     
     def configure_widgets(self):
         self.recognition_type = QComboBox()
-        recognition_items = [('Reconhecimento por cor da tela', 'screen_colorn'), 
+        recognition_items = [('Reconhecimento de piscadas no vídeo', 'blink_screen_recognition'), 
                              ('Reconhecimento por gesto', 'gesture_recognition'), 
                              ('Reconhecimento por voz', 'voice_recognition')]
         for text, value in recognition_items:

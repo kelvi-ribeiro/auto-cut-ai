@@ -2,7 +2,7 @@
 from core.notification.notification_system import NotificationSystem
 import core.video_manipulation_api as video_manipulation
 from core.gesture_recognition.gesture_recognition import GestureRecognition
-from core.screen_color_recognition import ScreenColorRecognition
+from core.blink_screen_recognition import BlinkScreenRecognition
 from core.voice_recognition import VoiceRecognition
 import utils.generic_utils as generic_utils
 import datetime as dt
@@ -29,7 +29,7 @@ def generate_cut_video(config, files, dir_to_save, combined_videos):
         elif recognition_type == "gesture_recognition":
             recognition_processor = GestureRecognition(files, config, notification_system)
         else: 
-            recognition_processor = ScreenColorRecognition(files, config, notification_system)
+            recognition_processor = BlinkScreenRecognition(files, config, notification_system)
             
         times_of_each_cut = recognition_processor.process()
         save_result_file(times_of_each_cut, final_video_name)

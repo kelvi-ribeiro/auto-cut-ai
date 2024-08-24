@@ -1,7 +1,7 @@
 import cv2
 from core.recognition_processor import RecognitionProcessor
 
-class ScreenColorRecognition(RecognitionProcessor):
+class BlinkScreenRecognition(RecognitionProcessor):
     def __init__(self, files, config, notification_system):
         super().__init__(files, config, notification_system)
 
@@ -9,7 +9,7 @@ class ScreenColorRecognition(RecognitionProcessor):
         threshold=10
         for idx, file in enumerate(self.files):
             self.print_process_status(idx, file)
-            self.update_progress_bar("Buscando por padrão de cores", idx) 
+            self.update_progress_bar("Buscando por piscadas no vídeo", idx) 
             cap = cv2.VideoCapture(file)
             fps = cap.get(cv2.CAP_PROP_FPS)
             seconds_considered_same_gesture = 4
