@@ -6,7 +6,7 @@ class BlinkScreenRecognition(RecognitionProcessor):
         super().__init__(files, config, notification_system)
 
     def process(self):
-        threshold=10
+        threshold=40 
         for idx, file in enumerate(self.files):
             self.print_process_status(idx, file)
             self.update_progress_bar("Buscando por piscadas no vídeo", idx) 

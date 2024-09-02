@@ -6,7 +6,10 @@ This Python project utilizes artificial intelligence to perform intelligent vide
 
 - ![MoviePy](https://img.shields.io/badge/MoviePy-v1.0.3-blue)
 - ![Pedalboard](https://img.shields.io/badge/Pedalboard-v0.9.3-orange)
+- ![opencv-python](https://img.shields.io/badge/opencv-python-v4.9.0.80-purple)
 - ![Fast_Whisper](https://img.shields.io/badge/Fast_Whisper-v1.0.0-green)
+- ![PyQt5](https://img.shields.io/badge/PyQt5-v5.15.11-red)
+- ![mediapipe](https://img.shields.io/badge/mediapipe-v0.10.14-yellow)
 
 ## Running on Windows
 
@@ -30,11 +33,3 @@ This Python project utilizes artificial intelligence to perform intelligent vide
    ```
    python main.py
    ```
-
-### Backlog:
-
-- Implement video cutting by gesture.
-- Implement automatic cutting after detecting keywords; use default time if not detected.
-- Estimate processing time.
-- Test from scratch on Windows.
-- Implement partial processing to resume from interruption points in videos.
