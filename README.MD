@@ -1,12 +1,13 @@
 ### Introduction
 
-This Python project utilizes artificial intelligence to perform intelligent video cuts based on detected keywords in audio. When a specific word, such as "cut" (configurable as a parameter), is identified, the program automatically segments the video, which can be repeated throughout the entire video. The goal is to simplify the editing of lengthy videos using these tools.
+AutoCut A.I is a Python program that automates the process of video editing by identifying and cutting sections of videos based on various recognition techniques, including voice, gesture, and blink screen recognition. It combines multiple video files, processes them according to the selected recognition method, and generates a final edited video with precise cuts. The system also includes notifications and email updates on the processing status, ensuring efficient and informed video production.
+
+[![short-version.gif](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdjc2xoaDVweG52eW9wMnA1eWdvODZ3aGRhbGlmNTI0cnFsYmU4OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LcnQpIZzmh1F7SZ8De/giphy.gif)
 
 ## Dependencies
 
 - ![MoviePy](https://img.shields.io/badge/MoviePy-v1.0.3-blue)
 - ![Pedalboard](https://img.shields.io/badge/Pedalboard-v0.9.3-orange)
-- ![opencv-python](https://img.shields.io/badge/opencv-python-v4.9.0.80-purple)
 - ![Fast_Whisper](https://img.shields.io/badge/Fast_Whisper-v1.0.0-green)
 - ![PyQt5](https://img.shields.io/badge/PyQt5-v5.15.11-red)
 - ![mediapipe](https://img.shields.io/badge/mediapipe-v0.10.14-yellow)
