@@ -6,14 +6,14 @@ class BlinkScreenRecognition(RecognitionProcessor):
         super().__init__(files, config, notification_system)
 
     def process(self):
-        threshold=40 
+        threshold=40
         for idx, file in enumerate(self.files):
             self.print_process_status(idx, file)
             self.update_progress_bar("Buscando por piscadas no vídeo", idx) 
             cap = cv2.VideoCapture(file)
             fps = cap.get(cv2.CAP_PROP_FPS)
             seconds_considered_same_gesture = 4
-            frame_interval = int(fps)  
+            frame_interval = int(fps / 2)  
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             current_video_duration = frame_count / fps
             while cap.isOpened():
@@ -27,7 +27,6 @@ class BlinkScreenRecognition(RecognitionProcessor):
                     break
 
                 gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
                 if cv2.mean(gray_frame)[0] < threshold:
                     seconds = (frame_position / fps) 
                     if idx > 0 :
