@@ -54,20 +54,28 @@ def generate_video(combined_videos, times_of_each_cut, dir_to_save, config):
 
 def merge_videos(videos_paths):
     videos = []
+    invalid_videos = []  
+
     for video_path in videos_paths:
         try:
             video = VideoFileClip(video_path)
             if video.duration >= MIN_VIDEO_SECONDS:
-                videos.append(VideoFileClip(video_path)) 
+                videos.append(video)
             else:
                 notification_system.notify(f"Ignorando o vídeo {video_path} com {video.duration} segundos por ter menos de {MIN_VIDEO_SECONDS} segundos, menor que o mínimo permitido")
+                invalid_videos.append(video_path)
         except Exception as e:
-            notification_system.notify(f"Erro no carregamento do vídeo: {e}")
-            return None  
-    ## TODO DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
-    ## video.close
-    if(len(videos) == 1):  
-        return videos[0]
-
+            notification_system.notify(f"Erro no carregamento do vídeo: {video_path} por ter algum erro no formato do vídeo.")
+            invalid_videos.append(video_path) 
+    
+    videos_paths[:] = [video for video in videos_paths if video not in invalid_videos]
+    
+    ## TODO: DAR UM JEITO DE FECHAR OS VÍDEOS, TEM ALGUNS CASOS QUE DÁ ERRO NO FINAL DO PROCESSO
+    # for video in videos:
+    #     video.close()  
+    
+    if len(videos) == 1:
+        return videos[0] 
+    
     notification_system.notify(f"Iniciando mesclagem de '{len(videos)}' vídeos")
-    return concatenate_videoclips(videos) 
+    return concatenate_videoclips(videos)
